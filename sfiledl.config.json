@@ -1,51 +1,51 @@
 {
-  "browser": {
-    "headless": true,
-    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-    "viewport": {
-      "width": 1280,
-      "height": 720
-    },
-    "proxy": null
-  },
-  "timeouts": {
-    "pageLoad": 60000,
-    "buttonWait": 30000,
-    "download": 120000,
-    "fallback": 10000
-  },
-  "retry": {
-    "maxAttempts": 3,
-    "initialDelay": 1000,
-    "maxDelay": 10000,
-    "backoffFactor": 2
-  },
-  "rateLimit": {
-    "enabled": true,
-    "minDelay": 2000
-  },
-  "download": {
-    "chunkSize": 1048576,
-    "validateChecksum": false,
-    "resumeEnabled": false
-  },
-  "logging": {
-    "level": "INFO",
-    "file": null,
-    "json": false
-  },
-  "debug": {
-    "enabled": false,
-    "saveArtifacts": true,
-    "artifactsDir": null
-  },
-  "batch": {
-    "concurrency": 1,
-    "stopOnError": true
-  },
-  "notifications": {
-    "webhook": null,
-    "onSuccess": false,
-    "onError": true
-  }
+	"browser": {
+		"headless": true,
+		"userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+		"viewport": {
+			"width": 1280,
+			"height": 720
+		},
+		"proxy": null
+	},
+	"timeouts": {
+		"pageLoad": 60000,
+		"buttonWait": 30000,
+		"download": 120000,
+		"fallback": 10000
+	},
+	"retry": {
+		"maxAttempts": 3,
+		"initialDelay": 1000,
+		"maxDelay": 10000,
+		"backoffFactor": 2
+	},
+	"rateLimit": {
+		"enabled": true,
+		"minDelay": 2000
+	},
+	"download": {
+		"chunkSize": 1048576,
+		"validateChecksum": false,
+		"resumeEnabled": false
+	},
+	"logging": {
+		"level": "INFO",
+		"file": null,
+		"json": false
+	},
+	"debug": {
+		"enabled": false,
+		"saveArtifacts": true,
+		"artifactsDir": null
+	},
+	"batch": {
+		"concurrency": 1,
+		"stopOnError": true
+	},
+	"notifications": {
+		"webhook": null,
+		"onSuccess": false,
+		"onError": true
+	}
 }

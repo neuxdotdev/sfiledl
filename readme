@@ -1,0 +1,7 @@
+sfiledl
+
+sfiledl is a tool designed to speed up the process of downloading files from the site https://sfile.co/.
+
+So, the site https://sfile.co/ is a site that works like Mediafire, a place for sharing files quickly.
+
+So, if we use a browser, it will take time. So, with sfiledl, we can automate the process of clicking on the UI. We just need to use the URL and everything is automated.

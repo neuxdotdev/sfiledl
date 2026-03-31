@@ -1,10 +1,10 @@
 {
 	"name": "sfiledl",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "🚀 Sfile Downloader - Strict TypeScript CLI tool for downloading files from sfile.co",
 	"type": "module",
 	"main": "./build/index.cjs",
-	"module": "./build/index.js",
+	"module": "./build/index.mjs",
 	"types": "./build/index.d.ts",
 	"license": "MIT",
 	"files": [
@@ -21,12 +21,12 @@
 	"exports": {
 		".": {
 			"types": "./build/index.d.ts",
-			"import": "./build/index.js",
+			"import": "./build/index.mjs",
 			"require": "./build/index.cjs"
 		}
 	},
 	"bin": {
-		"sfiledl": "./build/index.js"
+		"sfiledl": "build/index.mjs"
 	},
 	"scripts": {
 		"clean": "rm -rf build node_modules/.cache",
@@ -44,7 +44,7 @@
 		"clean-code": "rmcm -l js -i -c 0 -r ./src --verbose && bun run format",
 		"rebuild": "bun run clean && bun run clean-code && bun run build && bun run format:build",
 		"test": "bun test",
-		"prepublishOnly": "bun run build",
+		"prepublishOnly": "bun run rebuild && chmod +x build/index.mjs",
 		"prepare": "husky install || true",
 		"install:playwright": "bunx playwright install chromium"
 	},
@@ -60,7 +60,7 @@
 	"author": "neuxdotdev <neux@github.com>",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/neuxdotdev/sfiledl.git"
+		"url": "git+https://github.com/neuxdotdev/sfiledl.git"
 	},
 	"bugs": {
 		"url": "https://github.com/neuxdotdev/sfiledl/issues"

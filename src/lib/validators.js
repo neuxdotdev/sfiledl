@@ -285,9 +285,12 @@ export const validateFilename = (name, options = {}) => {
 			)
 		}
 		if (!allowedExtensions && !SAFE_EXTENSIONS.includes(extension)) {
-			Logger.debug(`Extension "${extension}" not in safe list (allowing with warning)`, {
-				safeList: SAFE_EXTENSIONS,
-			})
+			globalLogger.debug(
+				`Extension "${extension}" not in safe list (allowing with warning)`,
+				{
+					safeList: SAFE_EXTENSIONS,
+				},
+			)
 		}
 	}
 	let sanitized = baseName
@@ -329,7 +332,7 @@ export const validateFilename = (name, options = {}) => {
 export const sanitizeFilename = (name) => {
 	const result = validateFilename(name)
 	if (!result.valid) {
-		Logger.warn(`sanitizeFilename fallback: ${result.error}`, {
+		globalLogger.warn(`sanitizeFilename fallback: ${result.error}`, {
 			code: result.code,
 		})
 		return (
@@ -499,7 +502,7 @@ export const validateNoSSRF = (url) => {
 }
 if (process.env.NODE_ENV === 'development' && process.argv.includes('--test-validators')) {
 	;(async () => {
-		Logger.info('Running validator self-tests...')
+		globalLogger.info('Running validator self-tests...')
 		const tests = [
 			{
 				name: 'Valid sfile URL',
@@ -553,19 +556,22 @@ if (process.env.NODE_ENV === 'development' && process.argv.includes('--test-vali
 				const result = test.fn()
 				const success = result.valid === test.expect
 				if (success) {
-					Logger.debug(`${test.name}`)
+					globalLogger.debug(`${test.name}`)
 					passed++
 				} else {
-					Logger.error(`${test.name}: expected ${test.expect}, got ${result.valid}`, {
-						result,
-					})
+					globalLogger.error(
+						`${test.name}: expected ${test.expect}, got ${result.valid}`,
+						{
+							result,
+						},
+					)
 				}
 			} catch (err) {
-				Logger.error(`${test.name}: threw error`, { error: err.message })
+				globalLogger.error(`${test.name}: threw error`, { error: err.message })
 			}
 		}
-		Logger.info(`Tests: ${passed}/${tests.length} passed`)
+		globalLogger.info(`Tests: ${passed}/${tests.length} passed`)
 		process.exit(passed === tests.length ? 0 : 1)
 	})()
 }
-export { valid, invalid };
+export { valid, invalid }

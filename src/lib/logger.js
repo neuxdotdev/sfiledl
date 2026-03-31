@@ -97,7 +97,7 @@ function rotateLogFile(filePath) {
 		if (!existsSync(filePath)) return
 		const stats = statSync(filePath)
 		if (stats.size < MAX_FILE_SIZE) return
-		Logger.debug('Rotating log file', { path: filePath, size: stats.size })
+		globalLogger.debug('Rotating log file', { path: filePath, size: stats.size })
 		for (let i = MAX_BACKUPS; i >= 1; i--) {
 			const oldPath = i === MAX_BACKUPS ? `${filePath}.${i}` : `${filePath}.${i}`
 			const newPath = `${filePath}.${i + 1}`
@@ -116,7 +116,7 @@ function rotateLogFile(filePath) {
 		renameSync(filePath, `${filePath}.1`)
 		_logStream?.end()
 		_logStream = createWriteStream(filePath, { flags: 'a' })
-		Logger.info('Log file rotated', { path: filePath })
+		globalLogger.info('Log file rotated', { path: filePath })
 	} catch (err) {
 		console.error('[Logger] Rotation failed:', err.message)
 		_metrics.errors++
@@ -226,7 +226,7 @@ class LoggerInstance {
 	}
 }
 function initializeLogger() {
-	Logger.debug('Initializing logger...', {
+	globalLogger.debug('Initializing logger...', {
 		level: CONFIG.logging.level,
 		file: CONFIG.logging.file,
 		json: CONFIG.logging.json,
@@ -239,13 +239,13 @@ function initializeLogger() {
 			}
 			_logStream = createWriteStream(CONFIG.logging.file, { flags: 'a' })
 			_flushTimer = setInterval(flushBuffer, FLUSH_INTERVAL)
-			Logger.info('File logging enabled', { path: CONFIG.logging.file })
+			globalLogger.info('File logging enabled', { path: CONFIG.logging.file })
 		} catch (err) {
 			console.error('[Logger] Failed to setup file output:', err.message)
 			_metrics.errors++
 		}
 	}
-	Logger.info('Logger initialized', {
+	globalLogger.info('Logger initialized', {
 		level: CONFIG.logging.level,
 		hasColors: _hasColors,
 		context: 'global',
@@ -254,25 +254,25 @@ function initializeLogger() {
 async function shutdown() {
 	if (_isShuttingDown) return
 	_isShuttingDown = true
-	Logger.info('Shutting down logger...')
+	globalLogger.info('Shutting down logger...')
 	if (_flushTimer) {
 		clearInterval(_flushTimer)
 		_flushTimer = null
 	}
 	if (_buffer.length > 0) {
-		Logger.debug(`Flushing ${_buffer.length} pending log entries...`)
+		globalLogger.debug(`Flushing ${_buffer.length} pending log entries...`)
 		await flushBuffer()
 	}
 	if (_logStream) {
 		await new Promise((resolve) => {
 			_logStream.end(() => {
-				Logger.debug('Log file stream closed')
+				globalLogger.debug('Log file stream closed')
 				resolve()
 			})
 		})
 		_logStream = null
 	}
-	Logger.debug('Logger shutdown complete', { metrics: _metrics })
+	globalLogger.debug('Logger shutdown complete', { metrics: _metrics })
 }
 const globalLogger = new LoggerInstance()
 initializeLogger()
@@ -301,13 +301,13 @@ process.on('SIGTERM', async () => {
 	process.exit(0)
 })
 process.on('uncaughtException', (err) => {
-	Logger.error('Uncaught exception', {
+	globalLogger.error('Uncaught exception', {
 		error: err,
 		fatal: true,
 	})
 })
 process.on('unhandledRejection', (reason, promise) => {
-	Logger.error('Unhandled promise rejection', {
+	globalLogger.error('Unhandled promise rejection', {
 		reason: reason?.toString?.() || reason,
 		fatal: true,
 	})

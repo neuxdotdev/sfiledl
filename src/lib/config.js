@@ -1,7 +1,6 @@
 import { readFileSync, existsSync, watch } from 'fs'
 import { join, dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
-import { Logger } from './logger.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const rootDir = resolve(join(__dirname, '..'))
@@ -30,7 +29,9 @@ const CONFIG_SCHEMA = {
 				return typeof v.server === 'string' && v.server.length > 0
 			},
 			_onInvalid: () => {
-				Logger.warn("Invalid proxy config: must be { server: 'url' } or null/undefined")
+				globalLogger.warn(
+					"Invalid proxy config: must be { server: 'url' } or null/undefined",
+				)
 				return undefined
 			},
 			server: { _type: 'string' },
@@ -134,16 +135,16 @@ function buildDefaultsFromSchema(schema, path = '') {
 }
 function loadConfigFile(configPath) {
 	if (!existsSync(configPath)) {
-		Logger.debug('Config file not found, using defaults', { path: configPath })
+		console.debug('Config file not found, using defaults', { path: configPath })
 		return {}
 	}
 	try {
 		const content = readFileSync(configPath, 'utf-8')
 		const userConfig = JSON.parse(content)
-		Logger.info('Configuration loaded from file', { path: configPath })
+		console.info('Configuration loaded from file', { path: configPath })
 		return userConfig
 	} catch (error) {
-		Logger.error('Failed to load config file', {
+		console.error('Failed to load config file', {
 			path: configPath,
 			error: error.message,
 		})
@@ -210,26 +211,26 @@ function validateValue(value, definition, path) {
 		return definition._nullable !== false
 	}
 	if (definition._type && typeof value !== definition._type) {
-		Logger.error(
+		console.error(
 			`Config validation failed at "${path}": expected ${definition._type}, got ${typeof value}`,
 		)
 		return false
 	}
 	if (definition._enum && !definition._enum.includes(value)) {
-		Logger.error(
+		console.error(
 			`Config validation failed at "${path}": value must be one of [${definition._enum.join(', ')}]`,
 		)
 		return false
 	}
 	if (typeof value === 'number') {
 		if (definition._min !== undefined && value < definition._min) {
-			Logger.error(
+			console.error(
 				`Config validation failed at "${path}": value ${value} is below minimum ${definition._min}`,
 			)
 			return false
 		}
 		if (definition._max !== undefined && value > definition._max) {
-			Logger.error(
+			console.error(
 				`Config validation failed at "${path}": value ${value} is above maximum ${definition._max}`,
 			)
 			return false
@@ -240,7 +241,7 @@ function validateValue(value, definition, path) {
 			if (definition._onInvalid && typeof definition._onInvalid === 'function') {
 				return definition._onInvalid(value)
 			}
-			Logger.error(`Config validation failed at "${path}": custom validation failed`)
+			console.error(`Config validation failed at "${path}": custom validation failed`)
 			return false
 		}
 	}
@@ -252,7 +253,7 @@ function validateConfig(config, schema = CONFIG_SCHEMA, path = '') {
 		const currentPath = path ? `${path}.${key}` : key
 		const value = config[key]
 		if (definition._required && (value === undefined || value === null)) {
-			Logger.error(`Config validation failed: required field "${currentPath}" is missing`)
+			console.error(`Config validation failed: required field "${currentPath}" is missing`)
 			return false
 		}
 		if (value === undefined) continue
@@ -311,7 +312,7 @@ function getAll() {
 	return { ...CONFIG }
 }
 function initializeConfig() {
-	Logger.debug('Initializing configuration...')
+	console.debug('Initializing configuration...')
 	const fileConfig = loadConfigFile(join(rootDir, 'sfiledljs.config.json'))
 	const envConfig = loadEnvConfig()
 	let merged = deepMerge(DEFAULT_CONFIG, fileConfig)
@@ -321,7 +322,7 @@ function initializeConfig() {
 		throw new Error('Configuration validation failed. Check logs for details.')
 	}
 	const frozenConfig = freezeConfig(merged)
-	Logger.info('Configuration initialized', {
+	console.info('Configuration initialized', {
 		headless: frozenConfig.browser.headless,
 		logLevel: frozenConfig.logging.level,
 		retryAttempts: frozenConfig.retry.maxAttempts,
@@ -334,8 +335,8 @@ export const ConfigHelper = {
 	has,
 	getAll,
 	async reloadFromFile() {
-		Logger.warn("Config reload requested - note: ENV vars won't be re-read")
-		const fileConfig = loadConfigFile(join(rootDir, 'sfiledljs.config.json'))
+		console.warn("Config reload requested - note: ENV vars won't be re-read")
+		const fileConfig = loadConfigFile(join(rootDir, 'sfiledl.config.json'))
 		return deepMerge(CONFIG, fileConfig)
 	},
 }
@@ -344,9 +345,9 @@ if (process.env.NODE_ENV === 'development' && process.env.SFILEDL_WATCH_CONFIG =
 	if (existsSync(configPath)) {
 		watch(configPath, (eventType) => {
 			if (eventType === 'change') {
-				Logger.info('Config file changed - reload recommended')
+				console.info('Config file changed - reload recommended')
 			}
 		})
-		Logger.debug('Config file watch enabled (development mode)')
+		console.debug('Config file watch enabled (development mode)')
 	}
 }

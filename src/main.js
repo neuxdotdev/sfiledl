@@ -5,11 +5,11 @@ import { join, resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import EventEmitter from 'events'
 import { createInterface } from 'readline'
-import { SfileDownloader, DownloadCancelledError } from './src/downloader.js'
-import { Logger, LoggerUtils, createLogger } from './src/logger.js'
-import { CONFIG, ConfigHelper } from './src/config.js'
-import { validateSfileUrl, ValidationError } from './src/validators.js'
-import { sleep, withTimeout, getMemoryUsage, chunkArray } from './src/utils.js'
+import { SfileDownloader, DownloadCancelledError } from './lib/downloader.js'
+import { Logger, LoggerUtils, createLogger } from './lib/logger.js'
+import { CONFIG, ConfigHelper } from './lib/config.js'
+import { validateSfileUrl, ValidationError } from './lib/validators.js'
+import { sleep, withTimeout, getMemoryUsage, chunkArray } from './lib/utils.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const PACKAGE_JSON = join(__dirname, 'package.json')
@@ -558,7 +558,7 @@ DOCUMENTATION
 			{
 				name: 'Filename sanitization',
 				fn: async () => {
-					const { sanitizeFilename } = await import('./src/validators.js')
+					const { sanitizeFilename } = await import('./lib/validators.js')
 					return sanitizeFilename('test<file>.txt') === 'test_file.txt'
 				},
 			},

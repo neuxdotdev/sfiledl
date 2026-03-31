@@ -149,7 +149,7 @@ export class BrowserPlugin {
 				results.push(result)
 				if (hook.once) hook.active = false
 			} catch (err) {
-				Logger.warn(`Plugin ${this.name} hook ${hookName} failed`, {
+				globalLogger.warn(`Plugin ${this.name} hook ${hookName} failed`, {
 					plugin: this.name,
 					error: err.message,
 				})
@@ -1450,7 +1450,7 @@ export const launchBrowser = async (options) => {
 }
 if (process.env.NODE_ENV === 'development' && process.argv.includes('--test-browser')) {
 	;(async () => {
-		Logger.info('Running BrowserManager self-tests...')
+		globalLogger.info('Running BrowserManager self-tests...')
 		const tests = [
 			{
 				name: 'State machine transitions',
@@ -1484,16 +1484,16 @@ if (process.env.NODE_ENV === 'development' && process.argv.includes('--test-brow
 			try {
 				const success = await Promise.resolve(test.fn())
 				if (success) {
-					Logger.debug(`${test.name}`)
+					globalLogger.debug(`${test.name}`)
 					passed++
 				} else {
-					Logger.error(`${test.name}: returned false`)
+					globalLogger.error(`${test.name}: returned false`)
 				}
 			} catch (err) {
-				Logger.error(`${test.name}: ${err.message}`)
+				globalLogger.error(`${test.name}: ${err.message}`)
 			}
 		}
-		Logger.info(`Browser tests: ${passed}/${tests.length} passed`)
+		globalLogger.info(`Browser tests: ${passed}/${tests.length} passed`)
 		process.exit(passed === tests.length ? 0 : 1)
 	})()
 }

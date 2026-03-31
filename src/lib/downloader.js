@@ -310,7 +310,7 @@ class FileLock {
 						const lockInfo = JSON.parse(content)
 						const age = Date.now() - lockInfo.acquired
 						if (age > 5 * 60 * 1000) {
-							Logger.warn('Found stale lock file, removing', {
+							globalLogger.warn('Found stale lock file, removing', {
 								path: this.lockPath,
 								age,
 							})
@@ -363,9 +363,9 @@ export class DirectDownloadStrategy extends DownloadStrategy {
 		return downloadEventAvailable !== false
 	}
 	async execute({ page, autoUrl, timeout }) {
-		Logger.debug('Using DirectDownloadStrategy')
+		globalLogger.debug('Using DirectDownloadStrategy')
 		const downloadPromise = page.waitForEvent('download', { timeout }).catch((err) => {
-			Logger.debug('Download event wait failed', { error: err.message })
+			globalLogger.debug('Download event wait failed', { error: err.message })
 			return null
 		})
 		await page.goto(autoUrl, { waitUntil: 'commit', timeout })
@@ -389,7 +389,7 @@ export class ResponseInterceptStrategy extends DownloadStrategy {
 		super('response-intercept')
 	}
 	async execute({ page, autoUrl, timeout, fallbackDelay }) {
-		Logger.debug('Using ResponseInterceptStrategy')
+		globalLogger.debug('Using ResponseInterceptStrategy')
 		const responses = []
 		const onResponse = (res) => responses.push(res)
 		page.on('response', onResponse)
@@ -428,7 +428,7 @@ export class FetchFallbackStrategy extends DownloadStrategy {
 		return !!extractedUrl && !extractedUrl.includes('sfile.co/download/')
 	}
 	async execute({ extractedUrl, timeout }) {
-		Logger.debug('Using FetchFallbackStrategy')
+		globalLogger.debug('Using FetchFallbackStrategy')
 		const controller = new AbortController()
 		const timeoutId = setTimeout(() => controller.abort(), timeout)
 		try {

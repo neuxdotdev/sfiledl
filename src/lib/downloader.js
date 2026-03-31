@@ -746,7 +746,7 @@ export class SfileDownloader extends EventEmitter {
 	async _validateDownloadPreconditions(state, options) {
 		const dirValidation = await validateFilePath(this.saveDir, {
 			requireWritable: true,
-			baseDir: process.cwd(),
+			baseDir: null,
 		})
 		if (!dirValidation.valid) {
 			throw new DownloadValidationError(

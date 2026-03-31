@@ -1,6 +1,6 @@
 {
 	"name": "sfiledl",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "🚀 Sfile Downloader - Strict TypeScript CLI tool for downloading files from sfile.co",
 	"type": "module",
 	"main": "./build/index.cjs",
@@ -26,7 +26,7 @@
 		}
 	},
 	"bin": {
-		"sfiledl": "build/index.mjs"
+		"sfiledl": "build/index.cjs"
 	},
 	"scripts": {
 		"clean": "rm -rf build node_modules/.cache",

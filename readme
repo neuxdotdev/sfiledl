@@ -1,7 +1,203 @@
 sfiledl
+=======
 
 sfiledl is a tool designed to speed up the process of downloading files from the site https://sfile.co/.
 
 So, the site https://sfile.co/ is a site that works like Mediafire, a place for sharing files quickly.
 
 So, if we use a browser, it will take time. So, with sfiledl, we can automate the process of clicking on the UI. We just need to use the URL and everything is automated.
+
+
+INSTALLATION
+------------
+
+Installing sfiledl is quite easy. Make sure you have bun (recommended), npm. If you have it, open your terminal and run it.
+
+$ bun install --global sfiledl
+
+Congratulations, you've now installed sfiledl
+
+
+ALTERNATIVE INSTALLATION
+------------------------
+
+You can also clone this repository and install manually:
+
+$ git clone https://github.com/neuxdotdev/sfiledl.git
+$ cd sfiledl
+$ bun install
+$ bunx playwright install chromium
+
+Then run directly:
+
+$ bun run src/index.ts
+
+
+USAGE
+-----
+
+Download single file:
+
+$ bun run src/index.ts <url> [saveDir]
+
+Example:
+
+$ bun run src/index.ts https://sfile.co/xyz ./downloads
+
+Using globally installed binary:
+
+$ sfiledl https://sfile.co/xyz
+
+
+OPTIONS
+-------
+
+--help, -h           Show this help message
+--debug              Enable debug logging
+--headless=BOOL      Run browser headless (default: true)
+--proxy=URL          Proxy server URL
+--log-file=PATH      Write logs to file
+--json               Output logs as JSON
+--batch=FILE         Download URLs from file (one per line)
+--concurrency=N      Parallel downloads (1-20, default: 1)
+--retry=N            Max retry attempts (1-10, default: 3)
+--timeout=MS         Operation timeout in ms (default: 60000)
+
+
+BATCH DOWNLOAD
+--------------
+
+Create a text file with one URL per line:
+
+urls.txt
+--------
+https://sfile.co/url1
+https://sfile.co/url2
+https://sfile.co/url3
+
+Then run:
+
+$ bun run src/index.ts --batch=urls.txt --concurrency=3
+
+
+EXIT CODES
+----------
+
+0  Success
+1  Download or operation error
+2  CLI or validation error
+
+
+EXAMPLES
+--------
+
+Basic download:
+
+$ bun run src/index.ts https://sfile.co/abc /tmp/downloads
+
+With more retries:
+
+$ bun run src/index.ts https://sfile.co/xyz --retry=5
+
+Disable headless mode (shows browser window):
+
+$ bun run src/index.ts https://sfile.co/def --headless=false
+
+Use proxy:
+
+$ bun run src/index.ts https://sfile.co/ghi --proxy=http://localhost:8080
+
+Longer timeout for slow networks:
+
+$ bun run src/index.ts https://sfile.co/jkl --timeout=120000
+
+Debug logging:
+
+$ bun run src/index.ts https://sfile.co/mno --debug --verbose
+
+TROUBLESHOOTING
+---------------
+
+ERROR: Browser launch failed
+SOLUTION: Install Playwright browsers by running bunx playwright install chromium
+
+ERROR: Download timeout
+SOLUTION: Increase timeout using --timeout flag with higher value
+
+ERROR: Network blocked
+SOLUTION: Use proxy option or check firewall settings
+
+ERROR: File permission denied
+SOLUTION: Create download directory first or change save path permissions
+
+
+REQUIREMENTS
+------------
+
+Node.js >= 18.0.0
+Bun >= 1.3
+Playwright Chromium browser (install separately)
+
+
+CONTRIBUTING
+------------
+
+Contributions are welcome! Please feel free to submit Pull Requests.
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+
+BUILD FROM SOURCE
+-----------------
+
+Build production bundle:
+
+$ bun run build
+
+Clean and rebuild:
+
+$ bun run rebuild
+
+Type check only:
+
+$ bun run typecheck
+
+Run tests:
+
+$ bun run test
+
+
+PERFORMANCES
+------------
+
+Single file: ~2-5 seconds depending on network speed
+Batch download: Up to 20 concurrent downloads with concurrency option
+Memory usage: Optimized for long-running operations
+
+
+LICENSE
+-------
+
+MIT License - see LICENSE file for details
+
+
+AUTHOR
+------
+
+neuxdotdev - neuxdev1@gmail.com
+
+
+CREDITS
+-------
+
+Built with Playwright automation framework
+Designed for Bun runtime performance optimization
+
+
+Repository:	https://github.com/neuxdotdev/sfiledl
+
+Issues: https://github.com/neuxdotdev/sfiledl/issues

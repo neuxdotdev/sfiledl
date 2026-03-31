@@ -1,18 +1,91 @@
 {
 	"name": "sfiledl",
 	"version": "1.0.0",
+	"description": "🚀 Sfile Downloader - Strict TypeScript CLI tool for downloading files from sfile.co",
 	"type": "module",
-	"main": "index.js",
+	"main": "./build/index.cjs",
+	"module": "./build/index.js",
+	"types": "./build/index.d.ts",
 	"license": "MIT",
+	"files": [
+		"build"
+	],
+	"sideEffects": false,
+	"engines": {
+		"node": ">=18.0.0",
+		"bun": ">=1.0.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"exports": {
+		".": {
+			"types": "./build/index.d.ts",
+			"import": "./build/index.js",
+			"require": "./build/index.cjs"
+		}
+	},
+	"bin": {
+		"sfiledl": "./build/index.js"
+	},
+	"scripts": {
+		"clean": "rm -rf build node_modules/.cache",
+		"typecheck": "tsc --noEmit",
+		"build:ts": "tsc",
+		"build:bundle": "rollup -c",
+		"build": "bun run clean && bun run typecheck && bun run build:ts && bun run build:bundle",
+		"dev:ts": "tsc --emitDeclarationOnly --outDir build --watch",
+		"build:prod": "NODE_ENV=production bun run build",
+		"dev": "rollup -c -w --bundleConfigAsCjs",
+		"format:build": "bun ./scripts/format-build.js",
+		"lint": "tsc --noEmit",
+		"format": "prettier . --write",
+		"format:check": "prettier . --check",
+		"clean-code": "rmcm -l js -i -c 0 -r ./src --verbose && bun run format",
+		"rebuild": "bun run clean && bun run clean-code && bun run build && bun run format:build",
+		"test": "bun test",
+		"prepublishOnly": "bun run build",
+		"prepare": "husky install || true",
+		"install:playwright": "bunx playwright install chromium"
+	},
+	"keywords": [
+		"sfile",
+		"download",
+		"playwright",
+		"typescript",
+		"cli",
+		"bun",
+		"sfile-downloader"
+	],
+	"author": "neuxdotdev <neux@github.com>",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/neuxdotdev/sfiledl.git"
+	},
+	"bugs": {
+		"url": "https://github.com/neuxdotdev/sfiledl/issues"
+	},
+	"homepage": "https://github.com/neuxdotdev/sfiledl#readme",
 	"dependencies": {
-		"axios": "^1.14.0",
-		"chalk": "^5.6.2",
-		"cheerio": "^1.2.0",
-		"cli-progress": "^3.12.0",
-		"commander": "^14.0.3",
-		"dotenv": "^17.3.1",
-		"ora": "^9.3.0",
-		"playwright": "^1.58.2",
-		"tough-cookie": "^6.0.1"
+		"playwright": "^1.58.2"
+	},
+	"devDependencies": {
+		"@types/node": "^25.5.0",
+		"@rollup/plugin-commonjs": "^29.0.2",
+		"@rollup/plugin-json": "^6.1.0",
+		"@rollup/plugin-node-resolve": "^16.0.3",
+		"@rollup/plugin-replace": "^6.0.3",
+		"@rollup/plugin-terser": "^1.0.0",
+		"@rollup/plugin-typescript": "^12.3.0",
+		"dts-bundle-generator": "^9.5.1",
+		"esbuild": "^0.27.4",
+		"husky": "^9.1.7",
+		"prettier": "^3.8.1",
+		"rollup": "^4.60.1",
+		"rollup-plugin-dts": "^6.4.1",
+		"rollup-plugin-peer-deps-external": "^2.2.4",
+		"rollup-plugin-visualizer": "^7.0.1",
+		"tslib": "^2.8.1",
+		"typescript": "^6.0.2"
 	}
 }

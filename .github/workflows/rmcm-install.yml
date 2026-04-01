@@ -1,0 +1,46 @@
+name: Setup RMCM Tool
+'on':
+  workflow_call:
+    outputs:
+      cache-hit:
+        description: Whether the cache was hit
+        value: '${{ jobs.rmcm-install.outputs.cache-hit }}'
+jobs:
+  rmcm-install:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-hit: '${{ steps.cache-cargo.outputs.cache-hit }}'
+    steps:
+      - name: Checkout repository (for cargo git install)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          components: cargo
+      - name: Cache Cargo binaries and registry
+        id: cache-cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: >-
+            ${{ runner.os }}-cargo-rmcm-${{ hashFiles('**/Cargo.lock') }}-${{
+            github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-rmcm-${{ hashFiles('**/Cargo.lock') }}
+            ${{ runner.os }}-cargo-rmcm-
+      - name: Install rmcm from git (if cache miss)
+        if: steps.cache-cargo.outputs.cache-hit != 'true'
+        run: >-
+          cargo install --git https://github.com/neuxdotdev/comment-remover.git
+          --force
+      - name: Verify rmcm installation
+        run: |
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          rmcm --version || echo "rmcm installed successfully"

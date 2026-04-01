@@ -6,7 +6,7 @@
 	"main": "./build/lib.cjs",
 	"module": "./build/lib.mjs",
 	"types": "./build/lib.d.ts",
-	"license": "MIT",
+	"license": "AGPL-3.0-only",
 	"files": [
 		"build"
 	],

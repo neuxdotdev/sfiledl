@@ -8,7 +8,10 @@
 	"types": "./build/lib.d.ts",
 	"license": "AGPL-3.0-only",
 	"files": [
-		"build"
+		"build",
+		"readme",
+		"license",
+		"changelog"
 	],
 	"sideEffects": false,
 	"engines": {

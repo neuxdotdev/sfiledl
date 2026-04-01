@@ -67,7 +67,7 @@ const getBasePlugins = (outputDir) => {
 			sourceMap: true,
 			inlineSources: true,
 			outDir: absoluteOutputDir,
-			rootDir: resolve(projectRoot, 'src'),
+			rootDir: resolve(projectRoot, 'lib'),
 			noEmitOnError: isProduction,
 			skipLibCheck: true,
 		}),
@@ -77,7 +77,7 @@ const getBasePlugins = (outputDir) => {
 				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
 				'__VERSION__': JSON.stringify(packageJson.version),
 			},
-			include: ['src/**/*'],
+			include: ['lib/**/*'],
 			delimiters: ['', ''],
 		}),
 	]
@@ -107,7 +107,7 @@ const getMinificationPlugins = () => [
 			wrap_iife: false,
 		},
 		sourceMap: {
-			filename: 'index.[format].js.map',
+			filename: 'lib.[format].js.map',
 			url: 'inline',
 		},
 		mangle: {
@@ -187,7 +187,7 @@ const createLibConfig = ({ input, outputDir, minify = false }) => {
 		],
 		output: [
 			{
-				file: resolve(absoluteOutputDir, 'index.mjs'),
+				file: resolve(absoluteOutputDir, 'lib.mjs'),
 				format: 'esm',
 				sourcemap: true,
 				exports: 'named',
@@ -203,7 +203,7 @@ const createLibConfig = ({ input, outputDir, minify = false }) => {
 				},
 			},
 			{
-				file: resolve(absoluteOutputDir, 'index.cjs'),
+				file: resolve(absoluteOutputDir, 'lib.cjs'),
 				format: 'cjs',
 				sourcemap: true,
 				exports: 'named',
@@ -249,13 +249,13 @@ const createDtsConfig = ({ input, outputDir }) => {
 					declaration: true,
 					declarationMap: false,
 					emitDeclarationOnly: true,
-					rootDir: resolve(projectRoot, 'src'),
+					rootDir: resolve(projectRoot, 'lib'),
 					outDir: absoluteOutputDir,
 				},
 			}),
 		],
 		output: {
-			file: resolve(absoluteOutputDir, 'index.d.ts'),
+			file: resolve(absoluteOutputDir, 'lib.d.ts'),
 			format: 'es',
 			sourcemap: false,
 		},
@@ -267,12 +267,12 @@ const createDtsConfig = ({ input, outputDir }) => {
 }
 export default [
 	createLibConfig({
-		input: 'src/index.ts',
+		input: 'lib/lib.ts',
 		outputDir: 'build',
 		minify: isProduction,
 	}),
 	createDtsConfig({
-		input: 'src/index.ts',
+		input: 'lib/lib.ts',
 		outputDir: 'build',
 	}),
 ]

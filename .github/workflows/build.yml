@@ -1,72 +1,62 @@
-name: Build & Test
-'on':
+name: Build
+
+on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main, master]
   workflow_call:
     outputs:
-      build-status:
-        description: Build status
-        value: '${{ jobs.build.outputs.build-status }}'
+      status:
+        value: ${{ jobs.build.outputs.status }}
+
 jobs:
-  setup-rmcm:
+  prepare:
     uses: ./.github/workflows/rmcm-install.yml
+
   build:
-    needs: setup-rmcm
+    needs: prepare
     runs-on: ubuntu-latest
     outputs:
-      build-status: '${{ job.status }}'
+      status: ${{ job.status }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+
+      - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-      - name: Setup Rust (for rmcm runtime)
-        uses: dtolnay/rust-toolchain@stable
+
+      - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
-      - name: Restore Cargo Cache (for rmcm)
-        uses: actions/cache@v4
+
+      - uses: actions/cache@v4
         with:
-          path: |
-            ~/.cargo/bin
-            ~/.cargo/registry
-            ~/.cargo/git
-          key: >-
-            ${{ runner.os }}-cargo-rmcm-${{ hashFiles('**/Cargo.lock') }}-${{
-            github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-rmcm-
-      - name: Restore Bun Cache
-        uses: actions/cache@v4
+          path: ~/.cargo/bin/rmcm
+          key: ${{ runner.os }}-rmcm-v1-${{ hashFiles('.github/workflows/rmcm-install.yml') }}
+          restore-keys: ${{ runner.os }}-rmcm-v1-
+
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.bun/install/cache
             node_modules
             bun.lock
-          key: '${{ runner.os }}-bun-${{ hashFiles(''**/bun.lock'') }}'
-          restore-keys: |
-            ${{ runner.os }}-bun-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-      - name: Add Cargo bin to PATH
-        run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-      - name: Verify rmcm availability
-        run: rmcm --version
-      - name: Run Rebuild (Clean + Lint + Build + Format)
-        run: bun run rebuild
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+
+      - run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - run: command -v rmcm || (cargo install --git https://github.com/neuxdotdev/comment-remover.git --force && echo "$HOME/.cargo/bin" >> $GITHUB_PATH)
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun run rebuild
+
+      - uses: actions/upload-artifact@v4
         with:
-          name: build-output
+          name: build-artifacts
           path: build/
           retention-days: 1

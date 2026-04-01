@@ -84,3 +84,4 @@ _ttd_log_
 *.vsix
 .history
 .ionide
+.github/

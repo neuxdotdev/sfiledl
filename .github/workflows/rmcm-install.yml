@@ -1,46 +1,31 @@
-name: Setup RMCM Tool
-'on':
+name: Setup RMCM
+
+on:
   workflow_call:
     outputs:
       cache-hit:
-        description: Whether the cache was hit
-        value: '${{ jobs.rmcm-install.outputs.cache-hit }}'
+        value: ${{ jobs.rmcm.outputs.cache-hit }}
+
 jobs:
-  rmcm-install:
+  rmcm:
     runs-on: ubuntu-latest
     outputs:
-      cache-hit: '${{ steps.cache-cargo.outputs.cache-hit }}'
+      cache-hit: ${{ steps.cache.outputs.cache-hit }}
     steps:
-      - name: Checkout repository (for cargo git install)
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
-          components: cargo
-      - name: Cache Cargo binaries and registry
-        id: cache-cargo
+
+      - id: cache
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cargo/bin
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: >-
-            ${{ runner.os }}-cargo-rmcm-${{ hashFiles('**/Cargo.lock') }}-${{
-            github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-rmcm-${{ hashFiles('**/Cargo.lock') }}
-            ${{ runner.os }}-cargo-rmcm-
-      - name: Install rmcm from git (if cache miss)
-        if: steps.cache-cargo.outputs.cache-hit != 'true'
-        run: >-
-          cargo install --git https://github.com/neuxdotdev/comment-remover.git
-          --force
-      - name: Verify rmcm installation
-        run: |
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-          rmcm --version || echo "rmcm installed successfully"
+          path: ~/.cargo/bin/rmcm
+          key: ${{ runner.os }}-rmcm-v1-${{ hashFiles('.github/workflows/rmcm-install.yml') }}
+          restore-keys: ${{ runner.os }}-rmcm-v1-
+
+      - if: steps.cache.outputs.cache-hit != 'true'
+        run: cargo install --git https://github.com/neuxdotdev/comment-remover.git --force
+
+      - run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - run: command -v rmcm && rmcm --version

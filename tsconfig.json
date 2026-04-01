@@ -10,7 +10,7 @@
 		"allowImportingTsExtensions": false,
 		"resolveJsonModule": false,
 		"allowArbitraryExtensions": false,
-		"rootDir": "src",
+		"rootDir": "lib",
 		"outDir": "dist",
 		"declaration": true,
 		"declarationMap": true,
@@ -42,6 +42,6 @@
 		"skipLibCheck": true,
 		"useDefineForClassFields": true
 	},
-	"include": ["src/**/*", "dev/index.ts"],
+	"include": ["lib/**/*"],
 	"exclude": ["node_modules", "out"]
 }

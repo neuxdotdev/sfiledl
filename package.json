@@ -1,6 +1,6 @@
 {
 	"name": "sfiledl",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Implement and automate downloading of any file from sfile.co with javascripts library, written entirely in typescripts",
 	"type": "module",
 	"main": "./build/lib.cjs",
@@ -44,7 +44,7 @@
 		"clean-code": "rmcm -l js -i -c 0 -r ./lib --verbose && bun run format",
 		"rebuild": "bun run clean && bun run clean-code && bun run build && bun run format:build",
 		"test": "bun test",
-		"prepublishOnly": "bun run rebuild && chmod +x build/lib.mjs",
+		"prepublishOnly": "bun run build && chmod +x build/lib.mjs",
 		"prepare": "husky install || true",
 		"install:playwright": "bunx playwright install chromium"
 	},

@@ -1,32 +1,29 @@
 {
 	"name": "sfiledl",
 	"version": "1.0.2",
-	"description": "🚀 Sfile Downloader - Strict TypeScript CLI tool for downloading files from sfile.co",
+	"description": "Implement and automate downloading of any file from sfile.co with javascripts library, written entirely in typescripts",
 	"type": "module",
-	"main": "./build/index.cjs",
-	"module": "./build/index.mjs",
-	"types": "./build/index.d.ts",
+	"main": "./build/lib.cjs",
+	"module": "./build/lib.mjs",
+	"types": "./build/lib.d.ts",
 	"license": "MIT",
 	"files": [
 		"build"
 	],
 	"sideEffects": false,
 	"engines": {
-		"node": ">=18.0.0",
-		"bun": ">=1.0.0"
+		"node": ">=24",
+		"bun": ">=1.3"
 	},
 	"publishConfig": {
 		"access": "public"
 	},
 	"exports": {
 		".": {
-			"types": "./build/index.d.ts",
-			"import": "./build/index.mjs",
-			"require": "./build/index.cjs"
+			"types": "./build/lib.d.ts",
+			"import": "./build/lib.mjs",
+			"require": "./build/lib.cjs"
 		}
-	},
-	"bin": {
-		"sfiledl": "build/index.cjs"
 	},
 	"scripts": {
 		"clean": "rm -rf build node_modules/.cache",
@@ -41,10 +38,10 @@
 		"lint": "tsc --noEmit",
 		"format": "prettier . --write",
 		"format:check": "prettier . --check",
-		"clean-code": "rmcm -l js -i -c 0 -r ./src --verbose && bun run format",
+		"clean-code": "rmcm -l js -i -c 0 -r ./lib --verbose && bun run format",
 		"rebuild": "bun run clean && bun run clean-code && bun run build && bun run format:build",
 		"test": "bun test",
-		"prepublishOnly": "bun run rebuild && chmod +x build/index.mjs",
+		"prepublishOnly": "bun run rebuild && chmod +x build/lib.mjs",
 		"prepare": "husky install || true",
 		"install:playwright": "bunx playwright install chromium"
 	},

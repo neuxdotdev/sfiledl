@@ -1,6 +1,6 @@
 {
 	"name": "sfiledl",
-	"version": "2.2.2",
+	"version": "2.2.3",
 	"description": "Implement and automate downloading of any file from sfile.co with javascripts library, written entirely in typescripts",
 	"type": "module",
 	"main": "./build/lib.cjs",
@@ -10,8 +10,7 @@
 	"files": [
 		"build",
 		"readme.md",
-		"license",
-		"changelog"
+		"license"
 	],
 	"sideEffects": false,
 	"engines": {

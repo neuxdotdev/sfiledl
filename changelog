@@ -1,3 +1,63 @@
+commit bee596315d96e819de09fc3c41be8dbf48a0cff6
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 15:43:57 2026 +0700
+
+    update to v 2.2.0
+
+commit 1815dceedf75d9bcf6792d434e29c13f1df3febb
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 15:43:35 2026 +0700
+
+    release v2.2.0
+
+commit d6c9f4ba721946e3ad1fbf03e62c303b2b0db4e2
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 15:42:30 2026 +0700
+
+    chore: add homepage adn remake email addres
+
+commit 4d496d12961ac124dc925023edd09f3b2ed4ca5d
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:41:42 2026 +0700
+
+    docs: add license documentation
+
+commit 1ef8bc47f743ae5d9635f8a9a523339270f059b3
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:38:30 2026 +0700
+
+    chore(deps): install docsify-cli
+
+commit 3957dff22a80224a94e773c483b5c9e1ef1b862d
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:37:47 2026 +0700
+
+    docs: add documentation
+
+commit ac756423e300f61657cd12684b65b1193598de39
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:29:09 2026 +0700
+
+    chore(ci): remove --forzed flags
+
+commit ea96232f1d174bf637ca02b3ba5e15f6cd1e8379
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:16:02 2026 +0700
+
+    chore(ci): remove --forzed flags
+
+commit b5f26e7d68db524dde16e415f389513a5aa1d625
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:14:00 2026 +0700
+
+    chore: make all deps to latest version
+
+commit aec077df776784f2454d4f02137a0e4da2b47c3f
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:13:43 2026 +0700
+
+    chore: make all deps to latest version
+
 commit 3d97ed023174f7b516911f08ff13b8591cb383a4
 Author: neuxdotdev <neuxdev1@gmail.com>
 Date:   Thu Apr 2 14:09:48 2026 +0700

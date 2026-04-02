@@ -1,3 +1,95 @@
+commit 549aec09f8297318fcf52d69bc8262d78d769e0d
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:54 2026 +0700
+
+    chore(release): bump version to 2.1.1 for new download implementation
+
+commit 54147f326795e40dd6e8e6f08e70fb7323ab2f25
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:54 2026 +0700
+
+    refactor(lib): simplify entry point to re-export core modules only
+
+commit c82f51154fa17e8533b32c85c218644f46d2067a
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:50 2026 +0700
+
+    feat(core): implement downloadSfile function with direct/fallback download strategies
+
+commit 84a9e5db96eee8cd195a46b934f792d8c94461c0
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:45 2026 +0700
+
+    feat(browser): implement BrowserManager for Playwright lifecycle and fallback handling
+
+commit 8fb98f7b6da4717e27ddf019f1962fe25734cc45
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:44 2026 +0700
+
+    feat(browser): implement SfilePageInteractions for button wait and URL extraction
+
+commit 0e5fa3e6fa007baaf2baa60ce6be475792ae7376
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:40 2026 +0700
+
+    feat(config): define DownloadOptions, DownloadResult types and normalizeOptions
+
+commit 0271fcd44dc7d6ad5889e94f67af50f21afe23f6
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:39 2026 +0700
+
+    feat(config): add DEFAULTS constants for browser and timeout settings
+
+commit 5c2b9514892096756f817d9c7302b80a4c0bdbdc
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:34 2026 +0700
+
+    feat(errors): export all error classes from index
+
+commit 39e37b2392132c6e2f50544f363b6fef18a3693f
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:34 2026 +0700
+
+    feat(errors): implement ValidationError, NetworkError, FileError, BrowserError
+
+commit 113aa52b8c10c3dceae6dab54fb793a713c85d48
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:34 2026 +0700
+
+    feat(errors): create abstract AppError base class with metadata
+
+commit 632e1716941f317ef34e33131e8db22a745e812b
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:28 2026 +0700
+
+    feat(utils): add Result type and ok/err helper functions
+
+commit 404af4c69d443e1722bb74aa9e5dbc4391dcd77e
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:28 2026 +0700
+
+    feat(utils): implement Logger class with level-based filtering
+
+commit a590df93fe4476306a694f9475ae1ce27af74fd0
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:31:27 2026 +0700
+
+    feat(utils): add helper functions for filename sanitization and sleep
+
+commit 02745291f00d47110f673b1b923f108e55e331fc
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 02:02:27 2026 +0700
+
+    remake prepublish scripts
+
+commit a88b254acafbad32719b67c096fb3420ed813aa0
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 02:01:54 2026 +0700
+
+    release: v2.0.1
+    
+    delete ci for auto publihs
+
 commit c63b25ce873bcba391cf66dc52c3c04fb8eb9306
 Author: neuxdotdev <neuxdev1@gmail.com>
 Date:   Thu Apr 2 01:50:16 2026 +0700

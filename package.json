@@ -57,7 +57,7 @@
 		"bun",
 		"sfile-downloader"
 	],
-	"author": "neuxdotdev <neux@github.com>",
+	"author": "neuxdotdev <neuxdev1@gmail.com>",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/neuxdotdev/sfiledl.git"
@@ -65,7 +65,7 @@
 	"bugs": {
 		"url": "https://github.com/neuxdotdev/sfiledl/issues"
 	},
-	"homepage": "https://github.com/neuxdotdev/sfiledl#readme",
+	"homepage": "https://neuxdotdev.github.io/sfiledl/",
 	"dependencies": {
 		"playwright": "^1.59.1"
 	},

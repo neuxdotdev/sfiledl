@@ -1,872 +1,123 @@
-commit 1296b09fc4877575ea2e14debec0ff440bb74ecc
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 21:37:13 2026 +0700
+# Changelog
+
+All significant changes to this project will be recorded in this file.
 
-    docs: v2.2.3: docs improvement web and reamde
+This format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this version follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.2.3] - 2026-04-02
 
-commit 89681534435460a89dfd925909e79eefbd4edd02
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 21:15:08 2026 +0700
+### Docs
+- Improved web documentation and README.
+- Updated badges on README (npm version, downloads, license, build status, TypeScript, Playwright, Bun, Node, code style, PRs).
+- Minor documentation fixes.
 
-    Update readme.md
+### Chore
+- Patch update +1.
 
-commit d2387d9f45e69dce18f10ece5ca7e9ffd0a51dfc
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 21:09:43 2026 +0700
+## [2.2.2] - 2026-04-02
 
-    chore: update patch +1
+### Fixed
+- Fixed validator to handle `undefined`/`null` options (prevents runtime errors).
 
-commit 229a1683979395656a134e51b1f97fbceabcf5e6
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 21:11:09 2026 +0700
+- Validation for string fields (`correlationId`, `logFile`, `userAgent`).
+- Validation of `onProgress` as a function if provided.
+- Use bracket notation to avoid TS4111 errors.
+- Improved error messages with accepted types and values.
+- Closed issue [#1](https://github.com/neuxdotdev/sfiledl/issues/1).
 
-    docs: imrpoving documentation
+### Docs
+- Updated changelog.
+- Improved README.
 
-commit 48196a70d5186ce8b5d466598a5fc587c2943162
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 21:02:04 2026 +0700
+### Chore
+- Updated version to v2.2.2.
 
-    docs: Update badges in README
-    
-    Updated badges for npm version, downloads, license, build status, TypeScript, Playwright, Bun, Node, code style, and PRs.
+## [2.2.0] - 2026-04-02
 
-commit 2fe46149cbee3830ba5f6f35d69cf29b87dc0c75
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 16:16:07 2026 +0700
+### Added
+- Implementation of the `downloadSfile` function with immediate/fallback download strategies.
+- `BrowserManager` for Playwright lifecycle management.
+- `SfilePageInteractions` for URL extraction after button waits.
+- `DownloadOptions`, `DownloadResult` types, and `normalizeOptions` function.
+- `DEFAULTS` constants for browser settings and timeouts.
+- Error classes: `ValidationError`, `NetworkError`, `FileError`, `BrowserError`, and `AppError` (abstract).
+- Utilities: `Result` type, `ok`/`err` helpers, `Logger` with level filtering, `sanitizeFilename` and `sleep` functions.
 
-    Update readme.md
+### Changed
+- Simplified entry point to only re-export core modules.
+- Removed `rollup.config.mjs` and `scripts/format-build.js` – simplified build system.
+- Updated all dependencies to the latest versions.
 
-commit e9508f6f19dba5e39f6e43961efc3ceb1b322a65
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 16:15:59 2026 +0700
+### Docs
+- Added documentation using `docsify-cli`.
+- Updated license, homepage, and email.
+- README and changelog improvements.
 
-    update v to v2.2.2
+### Chore
+- Added `@types/rollup-plugin-peer-deps-external` for type safety.
+- Removed the `--forced` flag in the CI workflow.
+- Synced `bun.lock` with the latest dependencies.
 
-commit d7b049c72ae69f895106bc467d7181c8dd11a171
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 16:15:41 2026 +0700
+## [2.1.1] - 2026-04-02
 
-    Update changelog
+### Added
+- Initial implementation of `downloadSfile` with direct/fallback download strategies.
+- `BrowserManager` for managing Playwright.
+- `SfilePageInteractions` for page interactions.
 
-commit ad8556e1433a4971c49e315d8bbffacb693845d9
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 16:15:35 2026 +0700
+### Refactor
+- Simplified entry point: just re-export the core module.
+- Improved type safety and error handling.
 
-    fix(validator): handle undefined options and improve type safety
-    
-    - Fix runtime TypeError when options is undefined/null (early return)
-    - Add validation for string fields (correlationId, logFile, userAgent)
-    - Validate onProgress as function when provided
-    - Use bracket notation to avoid TS4111 index signature error
-    - Improve error messages with received type and value
-    
-    Fixes: Cannot use 'in' operator to search for 'timeout' in undefined
-    
-    releate issue:
-    close #1
+## [2.0.1] - 2026-04-02
 
-commit acab839504531f5938b5777a884ca8b07ad600e8
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 15:51:41 2026 +0700
+### Changed
+- Improved `prepublish` script.
+- Temporarily disabled auto-publish in CI.
 
-    docs: remkae readme
+## [2.0.0] - 2026-04-02
 
-commit 79b7c856357a6098c1fc41aef071c25d4d4d6340
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 15:44:21 2026 +0700
+### ⚠ BREAKING CHANGES
+- **Architecture**: Library changed from CLI to Framework. API stability is not guaranteed until the stable v2.0.0 release.
+- **Node.js**: Minimum version now **>=24**.
+- **Export**: Path changed from `index.*` to `lib.*`.
+- **CLI**: `bin` entry point removed. Tools are now purely library-based.
 
-    add changelog
+### Added
+- Library status system with `LibraryStatus` enum (`UNDER_CONSTRUCTION`, `STABLE`, `DEPRECATED`).
+- `assertStable()` function to ensure stable versions in production.
+- Suppress warnings via the `MY_SUPER_FRAMEWORK_SUPPRESS_WARNING` environment variable or the `suppressWarning()` method.
+- Licensed under **GNU Affero General Public License v3**.
 
-commit bee596315d96e819de09fc3c41be8dbf48a0cff6
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 15:43:57 2026 +0700
+### Refactoring
+- Migrated code structure from `src/lib` to `lib`.
+- Removed legacy modules (`result.ts`, `logger.ts`, `helpers.ts`, `errors/*`, `core/*`, `config/*`, `browser/*`).
+- Updated `tsconfig.json` (rootDir, include).
+- Updated `rollup.config.mjs` to reflect the new path.
+- Updated `package.json` (exports, engines, main, module, types, scripts).
 
-    update to v 2.2.0
+### Docs
+- Updated README to reflect architectural changes.
+- Added license documentation.
 
-commit 1815dceedf75d9bcf6792d434e29c13f1df3febb
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 15:43:35 2026 +0700
+### Chore
+- New CI workflows: `build.yml` and `publish.yml` (separating build and publish).
+- Reusable workflow `rmcm-install.yml`.
+- Implemented caching for Cargo binaries and Bun dependencies.
 
-    release v2.2.0
+## [1.0.2] - 2026-03-31
 
-commit d6c9f4ba721946e3ad1fbf03e62c303b2b0db4e2
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 15:42:30 2026 +0700
+### Chore
+- Minor fixes and adjustments.
 
-    chore: add homepage adn remake email addres
+## [1.0.1] - 2026-03-31
 
-commit 4d496d12961ac124dc925023edd09f3b2ed4ca5d
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:41:42 2026 +0700
+### Chore
+- Improved CI workflow.
 
-    docs: add license documentation
+## [1.0.0] - 2026-03-31
 
-commit 1ef8bc47f743ae5d9635f8a9a523339270f059b3
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:38:30 2026 +0700
-
-    chore(deps): install docsify-cli
-
-commit 3957dff22a80224a94e773c483b5c9e1ef1b862d
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:37:47 2026 +0700
-
-    docs: add documentation
-
-commit ac756423e300f61657cd12684b65b1193598de39
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:29:09 2026 +0700
-
-    chore(ci): remove --forzed flags
-
-commit ea96232f1d174bf637ca02b3ba5e15f6cd1e8379
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:16:02 2026 +0700
-
-    chore(ci): remove --forzed flags
-
-commit b5f26e7d68db524dde16e415f389513a5aa1d625
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:14:00 2026 +0700
-
-    chore: make all deps to latest version
-
-commit aec077df776784f2454d4f02137a0e4da2b47c3f
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:13:43 2026 +0700
-
-    chore: make all deps to latest version
-
-commit 3d97ed023174f7b516911f08ff13b8591cb383a4
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:09:48 2026 +0700
-
-    refactor(scripts): remove format-build.js — no longer needed
-
-commit a58bb5ac7fb2264404366473ad7fd29cb004d82d
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:09:48 2026 +0700
-
-    refactor(build): remove rollup.config.mjs — build system simplified
-
-commit 6d382fcdba8c4d7cf66603227fc5c16de012100a
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:09:47 2026 +0700
-
-    chore(lock): sync bun.lock with new dev dependency
-
-commit 3600641dfaa04be4b72c4a5030a0518df7f77e5b
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 14:09:47 2026 +0700
-
-    chore(deps): add @types/rollup-plugin-peer-deps-external for type safety
-
-commit 2d7e364aad740865ebfaf1b9e93527d2a239b7d9
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:53:26 2026 +0700
-
-    docs: edit changelog
-
-commit c2d0e21d0e8bbae449db5ba6e6af0b6f572b3374
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:52:54 2026 +0700
-
-    chore: make all deps to latest version
-
-commit c383258c2f9f74541c8d5a254d1fe4f7bf45f79e
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:45:20 2026 +0700
-
-    docs: edit readme.md
-
-commit 70c7736412b06fb7d4660d2f0b8d6769efa6ae88
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:34:23 2026 +0700
-
-    docs: update changelog
-
-commit 549aec09f8297318fcf52d69bc8262d78d769e0d
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:54 2026 +0700
-
-    chore(release): bump version to 2.1.1 for new download implementation
-
-commit 54147f326795e40dd6e8e6f08e70fb7323ab2f25
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:54 2026 +0700
-
-    refactor(lib): simplify entry point to re-export core modules only
-
-commit c82f51154fa17e8533b32c85c218644f46d2067a
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:50 2026 +0700
-
-    feat(core): implement downloadSfile function with direct/fallback download strategies
-
-commit 84a9e5db96eee8cd195a46b934f792d8c94461c0
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:45 2026 +0700
-
-    feat(browser): implement BrowserManager for Playwright lifecycle and fallback handling
-
-commit 8fb98f7b6da4717e27ddf019f1962fe25734cc45
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:44 2026 +0700
-
-    feat(browser): implement SfilePageInteractions for button wait and URL extraction
-
-commit 0e5fa3e6fa007baaf2baa60ce6be475792ae7376
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:40 2026 +0700
-
-    feat(config): define DownloadOptions, DownloadResult types and normalizeOptions
-
-commit 0271fcd44dc7d6ad5889e94f67af50f21afe23f6
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:39 2026 +0700
-
-    feat(config): add DEFAULTS constants for browser and timeout settings
-
-commit 5c2b9514892096756f817d9c7302b80a4c0bdbdc
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:34 2026 +0700
-
-    feat(errors): export all error classes from index
-
-commit 39e37b2392132c6e2f50544f363b6fef18a3693f
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:34 2026 +0700
-
-    feat(errors): implement ValidationError, NetworkError, FileError, BrowserError
-
-commit 113aa52b8c10c3dceae6dab54fb793a713c85d48
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:34 2026 +0700
-
-    feat(errors): create abstract AppError base class with metadata
-
-commit 632e1716941f317ef34e33131e8db22a745e812b
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:28 2026 +0700
-
-    feat(utils): add Result type and ok/err helper functions
-
-commit 404af4c69d443e1722bb74aa9e5dbc4391dcd77e
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:28 2026 +0700
-
-    feat(utils): implement Logger class with level-based filtering
-
-commit a590df93fe4476306a694f9475ae1ce27af74fd0
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 11:31:27 2026 +0700
-
-    feat(utils): add helper functions for filename sanitization and sleep
-
-commit 02745291f00d47110f673b1b923f108e55e331fc
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 02:02:27 2026 +0700
-
-    remake prepublish scripts
-
-commit a88b254acafbad32719b67c096fb3420ed813aa0
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 02:01:54 2026 +0700
-
-    release: v2.0.1
-    
-    delete ci for auto publihs
-
-commit c63b25ce873bcba391cf66dc52c3c04fb8eb9306
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:50:16 2026 +0700
-
-    ci(workflows): fix auto publish package
-
-commit 5de5d98d1d8516953e6964492392b35c94423445
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:45:32 2026 +0700
-
-    ci(workflows): fix auto publish package
-
-commit f92403bb7eda91517bf3e217c6979c1776877b4c
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:42:37 2026 +0700
-
-    ci(workflows): fix auto publish package
-
-commit c2af5f7e443cd77202c25143f94d1474f3319f1f
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:41:46 2026 +0700
-
-    ci(workflows): fix auto publish package
-
-commit 2f641bb1f6ce0bfacb636f41c00692cf959099f0
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:37:32 2026 +0700
-
-    ci(workflows): fix auto publish package
-
-commit b92a8f34aa55e695bffe3b8e36e9665b6b6b5942
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:22:00 2026 +0700
-
-    feat(lib): implement library status system and development warnings
-    
-    Major refactor to support framework architecture transition from CLI.
-    
-      New Features:
-      - Add LibraryStatus enum (UNDER_CONSTRUCTION, STABLE, DEPRECATED) for type-safe status management
-      - Extract stripAnsi() utility to module level for reuse across functions
-      - Add isDevelopmentVersion() type guard for runtime status checks
-      - Implement singleton pattern in LibStatus with getInstance() method
-      - Add warning suppression via MY_SUPER_FRAMEWORK_SUPPRESS_WARNING env variable
-      - Add suppressWarning() method for programmatic control (e.g., testing)
-      - Add assertStable() function to throw errors in production when using unstable versions
-      - Add comprehensive JSDoc comments for all public APIs
-    
-      Improvements:
-      - Warning now displays only once per process via warningDisplayed flag
-      - Early-return guards for console availability and duplicate warnings
-      - Updated LIB_INFO to use enum instead of string literals for better type safety
-      - Replace IIFE with conditional check using isDevelopmentVersion() for clarity
-      - Update version metadata: previousVersion 1.0.2 → currentVersion 2.0.0-dev
-    
-      Breaking Changes:
-      - stripAnsi() moved from private class method to module-level function
-      - isStable() and ensureStable() now reference LibraryStatus enum values
-      - initFramework() error message format updated to include migration path
-    
-      Migration Guide:
-      - CLI users: This version is UNDER_CONSTRUCTION. Do not use in production.
-      - Framework users: Use assertStable() at app startup to enforce version safety
-      - Test authors: Set MY_SUPER_FRAMEWORK_SUPPRESS_WARNING=true to disable console warnings
-    
-    BREAKING CHANGE: Library architecture changed from CLI to Framework. API stability not guaranteed until v2.0.0 stable release.
-    
-      Ref: Complete architectural refactor from sfiledl CLI to MySuperFramework library.
-
-commit c1bb34f97788ddd25d136fd87c356e788f4d6794
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:21:54 2026 +0700
-
-    ci(build): switch rebuild script to build in workflow
-    
-    Update build step to use 'bun run build' instead of 'bun run rebuild'.
-    
-      Rationale:
-      - 'build' script is sufficient for CI environment
-      - 'rebuild' includes clean-code formatting which is handled separately
-      - Reduces CI runtime by skipping redundant formatting steps
-    
-    Ref: Aligns with streamlined CI pipeline strategy.
-
-commit 76ac40bc17ebf9ff81604ee99630126798d88ae9
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:13:16 2026 +0700
-
-    chore(lib): add breaking news release major version 2.0.0
-    
-    so this verison is a news only
-
-commit 2f888799c39cdc3db0fe2b379c87e91c08e5ddf4
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:05:14 2026 +0700
-
-    docs(license): Add GNU Affero General Public License v3
-    
-    Added the GNU Affero General Public License version 3 to the project.
-
-commit 68c5106aedd4544107f36a7dd9de218bd14a9a34
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 01:01:35 2026 +0700
-
-    ci(workflows): new workflows fucntion
-
-commit 719fd3ddbaea9a96df2a5292f57db0ff417d0bcb
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:59:04 2026 +0700
-
-    Delete a.md
-
-commit 5cb6f9172345f93be7900f827007a13ca5c31a2b
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:58:39 2026 +0700
-
-    ci(workflows): new workflows fucntion
-
-commit f69098a04942b02c285e45d8ce5c3bb27f53f5ec
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:52:19 2026 +0700
-
-    chore(deps): regenerate bun.lock for consistency
-
-commit 0488670d8d06cec191e2219e77b19ba8116cea99
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:49:31 2026 +0700
-
-    Delete sfiledl.config.json
-
-commit 3d7952aa87aa2d0122a0168f9b1b40058c60f116
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:47:34 2026 +0700
-
-    ci: linting code
-
-commit 1ee556e6df53130d9eabe0673075267074ca28e9
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:44:07 2026 +0700
-
-    docs(readme): add trailing newline to file
-    
-    Append newline character at end of readme file to comply
-      with POSIX text file standards and improve git diff readability.
-    
-      This is a cosmetic change that does not affect content or rendering.
-    
-    Ref: https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newline
-
-commit 514d5b6c28a960ea1f8d16264ce2cb384cc7b310
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:43:58 2026 +0700
-
-    ci(workflows): remove legacy release workflow
-    
-    Delete release.yml as it has been superseded by the new
-      modular workflow structure (build.yml + publish.yml).
-    
-      The new workflow architecture provides:
-      - Better separation of concerns (build vs publish)
-      - Reusable rmcm-install sub-workflow
-      - Proper caching strategy for faster CI runs
-      - Conditional publishing based on build success
-    
-    BREAKING CHANGE: Legacy release workflow is no longer available. Use build.yml + publish.yml instead.
-
-commit bcb4d2d4c23cb31db61d270fb16633f3dde40785
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:43:50 2026 +0700
-
-    ci(workflows): add build workflow with rmcm setup and caching
-    
-    Create new build.yml workflow to handle CI/CD build process.
-    
-      Features:
-      - Call reusable rmcm-install workflow for tool setup
-      - Setup Bun and Rust toolchains for build environment
-      - Implement caching for Cargo binaries and Bun dependencies
-      - Run 'bun run rebuild' script for clean build pipeline
-      - Upload build artifacts for downstream workflows
-    
-      The workflow triggers on push/PR to main/master branches
-      and exposes build-status output for dependent workflows.
-    
-    Ref: Enables modular CI pipeline with build → publish dependency chain.
-
-commit 5779dbfe6ebd95f5df49615e6c784460e677799e
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:25:19 2026 +0700
-
-    docs: remake readme
-
-commit 84b4f39f2cd1875397f2abd307db755a2144a515
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:24:11 2026 +0700
-
-    ci: add test and auto publish to package maager
-
-commit fc2be2ee0432a19c1848a01c1fae554db496bb86
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:23:33 2026 +0700
-
-    chore: add new strukture
-
-commit b2c20cfb0a820d313000d748cd8fa179afe8ecb2
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:23:16 2026 +0700
-
-    Delete bun.js.yml
-
-commit 528c2abf077ee6e5b9bc759f4d6aab3c7a8931bf
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:22:49 2026 +0700
-
-    config(ts): update rootDir and include patterns for lib
-    
-    Set compilerOptions.rootDir to 'lib' to align with new source structure.
-      Update 'include' array to strictly cover 'lib/**/*' and remove 'dev/index.ts'.
-      This ensures type checking and emission only process files within the new lib directory.
-    
-    Ref: Structural refactor consistency across tooling.
-
-commit 6f6c0c98b57f1ce3e14b8d3e22c5c56f1e2affdf
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:22:44 2026 +0700
-
-    build(rollup): align build paths with new lib structure
-    
-    Migrate TypeScript plugin rootDir from 'src' to 'lib'.
-      Update replace plugin include pattern to target 'lib/**/*'.
-      Change source map filename pattern from 'index.*' to 'lib.*'.
-      Update output file configurations for ESM and CJS formats to use 'lib.*' naming.
-      Switch input entry points for both lib and dts configs from 'src/index.ts' to 'lib/lib.ts'.
-    
-    Ref: Ensures build output matches package.json exports configuration.
-
-commit 139b39bc4a8056c1bfca4796c2fcc2a4e6a87830
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:22:38 2026 +0700
-
-    refactor(pkg): update exports, engines, and project metadata
-    
-    Update package description to better reflect library automation capabilities.
-      Change main/module/types entry points from 'index.*' to 'lib.*' to match new build output.
-      Update engines requirement: Node.js >=24 and Bun >=1.3.
-      Remove 'bin' configuration as CLI entry point is adjusted or deprecated.
-      Update scripts 'clean-code' and 'prepublishOnly' to reference 'lib' directory and 'lib.mjs'.
-    
-    BREAKING CHANGE: Minimum Node.js version is now >=24. Export paths changed from index.* to lib.*. CLI bin entry removed.
-
-commit 692ab5e3e318be6fe1db62c47f10bf9fd2536846
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:48 2026 +0700
-
-    refactor(structure): remove legacy utils result module
-    
-    Delete src/lib/utils/result.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit fbaa61605c4d085370f2dcff29278f4304457c88
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:48 2026 +0700
-
-    refactor(structure): remove legacy utils logger module
-    
-    Delete src/lib/utils/logger.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit c99799579c816e2f41110d4da1464b2cdcae14c4
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:48 2026 +0700
-
-    refactor(structure): remove legacy utils helpers module
-    
-    Delete src/lib/utils/helpers.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit ae8fbcdb91b0f521894926adc2b52193e95ecd43
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:48 2026 +0700
-
-    refactor(structure): remove legacy lib entry point
-    
-    Delete src/lib/index.ts as part of migrating source root from src/lib to lib.
-      New entry point is established at lib/lib.ts.
-    
-    Ref: Structural cleanup.
-
-commit b646f515a9f967018bd2a008bb911b5e0998845e
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:48 2026 +0700
-
-    refactor(structure): remove legacy error index module
-    
-    Delete src/lib/errors/index.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit a527d378447d161e1550f4b23060201eb7cc5b1c
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:48 2026 +0700
-
-    refactor(structure): remove legacy error definitions module
-    
-    Delete src/lib/errors/errors.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit 27817d9e980d534c7d321e9f980d08e8712dcd4f
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:47 2026 +0700
-
-    refactor(structure): remove legacy error base module
-    
-    Delete src/lib/errors/base.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit 8c3a4f001b8e8fd35f80a5e344c7e5cfee5d6666
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:47 2026 +0700
-
-    refactor(structure): remove legacy core validator module
-    
-    Delete src/lib/core/validator.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit ed7aa52f05a291897615c3b69578f51ac44d7f7e
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:47 2026 +0700
-
-    refactor(structure): remove legacy core downloader module
-    
-    Delete src/lib/core/downloader.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit 1e5bfe64e945852dc58d6ada06f7b3552276d3ff
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:47 2026 +0700
-
-    refactor(structure): remove legacy config schema module
-    
-    Delete src/lib/config/schema.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit 85c856f8ec601bda7a389eacbd8952b7cbcae05f
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:47 2026 +0700
-
-    refactor(structure): remove legacy config defaults module
-    
-    Delete src/lib/config/defaults.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit 8b985f60d5ab361845dc7be81e237c598ad7ed20
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:47 2026 +0700
-
-    refactor(structure): remove legacy page-interactions module
-    
-    Delete src/lib/browser/page-interactions.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit 14c345d795337b53d3c3bc6cf667bd3ab47a3b35
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:20:46 2026 +0700
-
-    refactor(structure): remove legacy browser-manager module
-    
-    Delete src/lib/browser/browser-manager.ts as part of migrating source root from src/lib to lib.
-      Functionality is either moved or deprecated in the new structure.
-    
-    Ref: Structural cleanup.
-
-commit 9838ad6ae4cffdd354e495e9c0107561a5de0abb
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:08:30 2026 +0700
-
-    chore: delete types becouse they are automaticly build whit rollop and another scripts
-
-commit fdb845ac8d65a234796b4f1a34326db75a2e0326
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:07:01 2026 +0700
-
-    chore(clean): lint code and make beutifuly
-
-commit b9ad3920a56a4e71ad9f83e20bfaf162abe2e848
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:06:15 2026 +0700
-
-    chore: add simple new scafolding
-
-commit 3302791a12b4e5adec1e0f3eb5ee8d9eb962d914
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Thu Apr 2 00:05:44 2026 +0700
-
-    refactor(main): migration from cli to libary
-
-commit 89566d5b62e3499ac0fee5611a0561c05e82ba74
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 18:17:03 2026 +0700
-
-    release v1.0.2
-
-commit 26300dc7e38351fb537557fb5c3cfefa12040ab6
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 18:09:45 2026 +0700
-
-    release v1.0.1
-
-commit 011980a0cf2ed43815249fc4abaa96d5a7c5d97e
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 17:52:29 2026 +0700
-
-    chore(CI): add bun test and building
-
-commit e2dd933f70facd7fb2f32a2e7cb5805a0420996c
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 17:51:20 2026 +0700
-
-    chore(CI): add bun test and building
-
-commit 61cc94c9719267c6549f6b5279c75994fece0e49
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 17:47:02 2026 +0700
-
-    Update Node.js CI workflow to include Bun support
-
-commit d5e71a6e8056c57466085ba7bf30a1709c22c62b
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 17:39:49 2026 +0700
-
-    release v1.0.0
-
-commit 080451c7a87fdcd8e7ee4c15886718f6d78b03cf
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 15:27:06 2026 +0700
-
-    remove this constraint for the CLI tool, as users should be able to download files to any writable location
-
-commit 03dbe129a4f4c3049df4953c14be1dd557d53bce
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 15:22:47 2026 +0700
-
-    add readme
-
-commit f75ad055ed13a4c8a74c051c8cce16f2676bd94c
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 15:16:38 2026 +0700
-
-    add license
-
-commit cb5a042c6f6a8dc0147e2dbaeaa0997a6485de87
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 15:11:02 2026 +0700
-
-     Changes to be committed:
-            modified:   package.json
-            renamed:    src/browser.js -> src/lib/browser.js
-            renamed:    src/config.js -> src/lib/config.js
-            renamed:    src/downloader.js -> src/lib/downloader.js
-            renamed:    src/logger.js -> src/lib/logger.js
-            renamed:    src/utils.js -> src/lib/utils.js
-            renamed:    src/validators.js -> src/lib/validators.js
-            renamed:    index.js -> src/main.js
-            modified:   yarn.lock
-
-commit f849b5771d659c103a69886782b9cc92e9edb336
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 11:06:41 2026 +0700
-
-    Update validators.js
-
-commit fa70706a675f40f57aa1de955d2b9512271b9575
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 11:06:38 2026 +0700
-
-    Update utils.js
-
-commit a28e47f1b46a088d338b8efd9c3cdc36748a0050
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 11:06:35 2026 +0700
-
-    Update logger.js
-
-commit 975448f4134ab043675f2aa91d633152d2a73656
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 10:58:34 2026 +0700
-
-    Update downloader.js
-
-commit 973b9b119405a1f8c01eefbc3ac9937acab15838
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 10:58:29 2026 +0700
-
-    Update config.js
-
-commit 2c68d353680390886f6862ce2ee7acb761f9dbb5
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 10:58:24 2026 +0700
-
-    Update browser.js
-
-commit 069a2bd7be6580ee7dac620278284aee1e5c3bae
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 10:58:17 2026 +0700
-
-    Update index.js
-
-commit 79962bdde8e1311d9148c059f77c860b3a6d7d69
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:48:34 2026 +0700
-
-    Update sfiledl.config.json
-
-commit 730d6f4da3541c17aafb015279ba7f49392487bd
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:48:29 2026 +0700
-
-    Update .gitignore
-
-commit bbdba5e372db33bb2d6171b5d2164d9a4292e363
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:48:07 2026 +0700
-
-    Create package.json
-
-commit bebaacbde5af4bdf46844867aa5dda355d488993
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:48:03 2026 +0700
-
-    Create yarn.lock
-
-commit 7dfe7fc5b193ef0530c409c3cbe501947a7e0149
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:47:54 2026 +0700
-
-    Create .prettierrc.json
-
-commit fe6a57f580353a2f64ac2685a533ce6de4a503ef
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:47:49 2026 +0700
-
-    Create .prettierignore
-
-commit 47d2f1d5e9d03994302775d98628a4cc87685c05
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:47:42 2026 +0700
-
-    Create .gitignore
-
-commit c9738dc10c7082d16846d270230bdbd8896c1c3d
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:47:38 2026 +0700
-
-    Create .editorconfig
-
-commit b73fec1ed483c0898055375a290ee0b6020de7af
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:41:08 2026 +0700
-
-    Delete sfiledljs.config.json
-
-commit 7662a283e097c3adb1b548efb73ab4efa9cb33f1
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:40:57 2026 +0700
-
-    chore(conf): add default cofig
-
-commit 89167992700d6c31a917e930a0c90c0d1b541ce6
-Author: neuxdotdev <neuxdev1@gmail.com>
-Date:   Tue Mar 31 02:24:29 2026 +0700
-
-    chore(v1): make development version (unstable)
+### Added
+- Initial release: CLI tool for downloading files from sfile.mobi.
+- Features: download using Playwright, JSON file configuration, logging.
+- Input validation and basic error handling.

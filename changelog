@@ -1,3 +1,33 @@
+commit 3d97ed023174f7b516911f08ff13b8591cb383a4
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:09:48 2026 +0700
+
+    refactor(scripts): remove format-build.js — no longer needed
+
+commit a58bb5ac7fb2264404366473ad7fd29cb004d82d
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:09:48 2026 +0700
+
+    refactor(build): remove rollup.config.mjs — build system simplified
+
+commit 6d382fcdba8c4d7cf66603227fc5c16de012100a
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:09:47 2026 +0700
+
+    chore(lock): sync bun.lock with new dev dependency
+
+commit 3600641dfaa04be4b72c4a5030a0518df7f77e5b
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 14:09:47 2026 +0700
+
+    chore(deps): add @types/rollup-plugin-peer-deps-external for type safety
+
+commit 2d7e364aad740865ebfaf1b9e93527d2a239b7d9
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:53:26 2026 +0700
+
+    docs: edit changelog
+
 commit c2d0e21d0e8bbae449db5ba6e6af0b6f572b3374
 Author: neuxdotdev <neuxdev1@gmail.com>
 Date:   Thu Apr 2 11:52:54 2026 +0700

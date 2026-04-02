@@ -37,7 +37,7 @@
 		"dev:ts": "tsc --emitDeclarationOnly --outDir build --watch",
 		"build:prod": "NODE_ENV=production bun run build",
 		"dev": "rollup -c -w --bundleConfigAsCjs",
-		"format:build": "bun ./scripts/format-build.js",
+		"format:build": "bun ./scripts/format-build.ts",
 		"lint": "tsc --noEmit",
 		"format": "prettier . --write",
 		"format:check": "prettier . --check",

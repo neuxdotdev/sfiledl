@@ -12,8 +12,6 @@
 [![Node](https://img.shields.io/badge/Node-%3E%3D24-green?style=flat-square&logo=node.js)](https://nodejs.org)
 [![code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square&logo=prettier)](https://prettier.io)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-<<<<<<< HEAD
-=======
 
 ---
 
@@ -38,7 +36,6 @@
     - [Scripts](#scripts)
 - [Contributing](#contributing)
 - [License](#license)
->>>>>>> 91ae467 (docs: imrpoving documentation)
 
 ---
 

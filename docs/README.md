@@ -151,7 +151,7 @@ bun run test
 
 ## License
 
-**AGPL-3.0-only** — See [LICENSE](license) for details.
+**AGPL-3.0-only** — See [LICENSE](license.md) for details.
 
 > This license ensures that any network-distributed modifications remain open source.
 

@@ -1,3 +1,70 @@
+commit 1296b09fc4877575ea2e14debec0ff440bb74ecc
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 21:37:13 2026 +0700
+
+    docs: v2.2.3: docs improvement web and reamde
+
+commit 89681534435460a89dfd925909e79eefbd4edd02
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 21:15:08 2026 +0700
+
+    Update readme.md
+
+commit d2387d9f45e69dce18f10ece5ca7e9ffd0a51dfc
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 21:09:43 2026 +0700
+
+    chore: update patch +1
+
+commit 229a1683979395656a134e51b1f97fbceabcf5e6
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 21:11:09 2026 +0700
+
+    docs: imrpoving documentation
+
+commit 48196a70d5186ce8b5d466598a5fc587c2943162
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 21:02:04 2026 +0700
+
+    docs: Update badges in README
+    
+    Updated badges for npm version, downloads, license, build status, TypeScript, Playwright, Bun, Node, code style, and PRs.
+
+commit 2fe46149cbee3830ba5f6f35d69cf29b87dc0c75
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 16:16:07 2026 +0700
+
+    Update readme.md
+
+commit e9508f6f19dba5e39f6e43961efc3ceb1b322a65
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 16:15:59 2026 +0700
+
+    update v to v2.2.2
+
+commit d7b049c72ae69f895106bc467d7181c8dd11a171
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 16:15:41 2026 +0700
+
+    Update changelog
+
+commit ad8556e1433a4971c49e315d8bbffacb693845d9
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 16:15:35 2026 +0700
+
+    fix(validator): handle undefined options and improve type safety
+    
+    - Fix runtime TypeError when options is undefined/null (early return)
+    - Add validation for string fields (correlationId, logFile, userAgent)
+    - Validate onProgress as function when provided
+    - Use bracket notation to avoid TS4111 index signature error
+    - Improve error messages with received type and value
+    
+    Fixes: Cannot use 'in' operator to search for 'timeout' in undefined
+    
+    releate issue:
+    close #1
+
 commit acab839504531f5938b5777a884ca8b07ad600e8
 Author: neuxdotdev <neuxdev1@gmail.com>
 Date:   Thu Apr 2 15:51:41 2026 +0700

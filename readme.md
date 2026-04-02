@@ -2,10 +2,16 @@
 
 > Automate file downloads from [sfile.co](https://sfile.co/) — reliable, retry‑aware, and fully typed.
 
-[![npm version](https://img.shields.io/npm/v/sfiledl)](https://www.npmjs.com/package/sfiledl)
-[![License](https://img.shields.io/npm/l/sfiledl)](https://github.com/neuxdotdev/sfiledl/blob/main/license)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org)
-[![Playwright](https://img.shields.io/badge/Playwright-1.40-green)](https://playwright.dev)
+[![npm version](https://img.shields.io/npm/v/sfiledl.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/sfiledl)
+[![npm downloads](https://img.shields.io/npm/dm/sfiledl?style=flat-square&logo=npm)](https://www.npmjs.com/package/sfiledl)
+[![license](https://img.shields.io/github/license/neuxdotdev/sfiledl?style=flat-square)](https://github.com/neuxdotdev/sfiledl/blob/main/license)
+[![build](https://img.shields.io/github/actions/workflow/status/neuxdotdev/sfiledl/build.yml?branch=main&style=flat-square&logo=github)](https://github.com/neuxdotdev/sfiledl/actions)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
+[![Playwright](https://img.shields.io/badge/Playwright-1.59-green?style=flat-square&logo=playwright)](https://playwright.dev)
+[![Bun](https://img.shields.io/badge/Bun-1.3+-black?style=flat-square&logo=bun)](https://bun.sh)
+[![Node](https://img.shields.io/badge/Node-%3E%3D24-green?style=flat-square&logo=node.js)](https://nodejs.org)
+[![code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square&logo=prettier)](https://prettier.io)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 ---
 

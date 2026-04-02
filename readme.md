@@ -234,7 +234,6 @@ bun run rebuild
 bun run test
 ```
 
-
 ### Scripts
 
 | Command                | Description                    |

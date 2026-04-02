@@ -53,7 +53,10 @@ export class InputValidator {
 		return sanitized.slice(0, maxLength)
 	}
 	static validateOptions(options: unknown): void {
-		if (options && typeof options !== 'object') {
+		if (options === undefined || options === null) {
+			return
+		}
+		if (typeof options !== 'object') {
 			throw new ValidationError('Options must be an object or undefined', {
 				received: typeof options,
 			})
@@ -61,7 +64,7 @@ export class InputValidator {
 		const opts = options as Record<string, unknown>
 		const numericFields = ['timeout', 'retries', 'retryDelay', 'downloadButtonTimeout'] as const
 		for (const field of numericFields) {
-			if (field in opts && typeof opts[field] !== 'number') {
+			if (field in opts && opts[field] !== undefined && typeof opts[field] !== 'number') {
 				throw new ValidationError(`Option '${field}' must be a number`, {
 					field,
 					received: typeof opts[field],
@@ -71,13 +74,32 @@ export class InputValidator {
 		}
 		const booleanFields = ['headless', 'debug', 'saveDebugArtifacts'] as const
 		for (const field of booleanFields) {
-			if (field in opts && typeof opts[field] !== 'boolean') {
+			if (field in opts && opts[field] !== undefined && typeof opts[field] !== 'boolean') {
 				throw new ValidationError(`Option '${field}' must be a boolean`, {
 					field,
 					received: typeof opts[field],
 					value: opts[field],
 				})
 			}
+		}
+		const stringFields = ['correlationId', 'logFile', 'userAgent'] as const
+		for (const field of stringFields) {
+			if (field in opts && opts[field] !== undefined && typeof opts[field] !== 'string') {
+				throw new ValidationError(`Option '${field}' must be a string`, {
+					field,
+					received: typeof opts[field],
+					value: opts[field],
+				})
+			}
+		}
+		if (
+			'onProgress' in opts &&
+			opts['onProgress'] !== undefined &&
+			typeof opts['onProgress'] !== 'function'
+		) {
+			throw new ValidationError(`Option 'onProgress' must be a function`, {
+				received: typeof opts['onProgress'],
+			})
 		}
 	}
 }

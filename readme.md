@@ -12,6 +12,33 @@
 [![Node](https://img.shields.io/badge/Node-%3E%3D24-green?style=flat-square&logo=node.js)](https://nodejs.org)
 [![code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square&logo=prettier)](https://prettier.io)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+<<<<<<< HEAD
+=======
+
+---
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [API Reference](#api-reference)
+    - [downloadSfile](#downloadsfile)
+    - [downloadSfileSafe](#downloadsfilesafe)
+    - [createDownloader](#createdownloader)
+    - [DownloadOptions](#downloadoptions)
+    - [DownloadResult](#downloadresult)
+- [Error Handling](#error-handling)
+    - [Error Types](#error-types)
+    - [Retryable Errors](#retryable-errors)
+- [Debug Mode & Artifacts](#debug-mode--artifacts)
+- [Logging & Correlation](#logging--correlation)
+- [Progress Tracking](#progress-tracking)
+- [Development](#development)
+    - [Project Structure](#project-structure)
+    - [Scripts](#scripts)
+- [Contributing](#contributing)
+- [License](#license)
+>>>>>>> 91ae467 (docs: imrpoving documentation)
 
 ---
 
@@ -27,6 +54,8 @@ npm install sfiledl
 # Install Playwright browser (required)
 bunx playwright install chromium   # or npx playwright install chromium
 ```
+
+**Prerequisites:** Node.js >=24 or Bun >=1.3.
 
 ---
 
@@ -86,46 +115,42 @@ Creates a reusable downloader with preset options.
 ```typescript
 const dl = createDownloader({ headless: false, debug: true })
 const result = await dl.download('https://sfile.co/file/xyz', './out')
-// or safe variant:
+
+// safe variant
 const safeResult = await dl.downloadSafe(url, './out')
-// chain new defaults:
+
+// chain new defaults
 const quietDl = dl.withOptions({ debug: false })
 ```
 
 ### `DownloadOptions`
 
-```typescript
-interface DownloadOptions {
-	headless?: boolean // default: true
-	debug?: boolean // default: false
-	userAgent?: string // custom UA (default: Chrome on Windows)
-	timeout?: number // navigation & download timeout (ms) – default: 60000
-	downloadButtonTimeout?: number // wait for button timeout – default: 30000
-	retries?: number // total attempts – default: 3
-	retryDelay?: number // base delay before exponential backoff – default: 1000
-	onProgress?: (
-		percent: number,
-		total: 100,
-		meta: { stage: string; message: string; attempt?: number },
-	) => void
-	correlationId?: string // for tracing across logs
-	saveDebugArtifacts?: boolean // save screenshot/html on error – default: true
-	logFile?: string // write structured logs to file
-}
-```
+All options are optional.
+
+| Option                  | Type                             | Default              | Description                                                     |
+| ----------------------- | -------------------------------- | -------------------- | --------------------------------------------------------------- |
+| `headless`              | `boolean`                        | `true`               | Run browser in headless mode.                                   |
+| `debug`                 | `boolean`                        | `false`              | Enable verbose logging and debug artifacts.                     |
+| `userAgent`             | `string`                         | Chrome on Windows UA | Custom user agent string.                                       |
+| `timeout`               | `number` (ms)                    | `60000`              | Navigation and download timeout.                                |
+| `downloadButtonTimeout` | `number` (ms)                    | `30000`              | Timeout for download button to appear.                          |
+| `retries`               | `number`                         | `3`                  | Total attempts (including first).                               |
+| `retryDelay`            | `number` (ms)                    | `1000`               | Base delay before exponential backoff.                          |
+| `onProgress`            | `(percent, total, meta) => void` | `undefined`          | Progress callback. See [Progress Tracking](#progress-tracking). |
+| `correlationId`         | `string`                         | auto-generated UUID  | ID for tracing across logs.                                     |
+| `saveDebugArtifacts`    | `boolean`                        | `true`               | Save screenshot and HTML on error.                              |
+| `logFile`               | `string`                         | `undefined`          | Write structured logs to file.                                  |
 
 ### `DownloadResult`
 
-```typescript
-interface DownloadResult {
-	filePath: string // absolute path to saved file
-	size: number // bytes
-	method: 'direct' | 'fallback'
-	correlationId?: string
-	durationMs?: number
-	attempts?: number
-}
-```
+| Property        | Type                       | Description                                  |
+| --------------- | -------------------------- | -------------------------------------------- |
+| `filePath`      | `string`                   | Absolute path to saved file.                 |
+| `size`          | `number` (bytes)           | File size.                                   |
+| `method`        | `'direct'` or `'fallback'` | How the file was captured.                   |
+| `correlationId` | `string` (optional)        | The ID used for logging.                     |
+| `durationMs`    | `number` (optional)        | Total time from start to finish.             |
+| `attempts`      | `number` (optional)        | Number of attempts made (including retries). |
 
 ---
 
@@ -155,7 +180,7 @@ try {
 }
 ```
 
-### Error types
+### Error Types
 
 | Class             | Code               | Retryable | When                                                           |
 | ----------------- | ------------------ | --------- | -------------------------------------------------------------- |
@@ -240,16 +265,46 @@ bun run rebuild
 bun run test
 ```
 
+### Project Structure
+
+```
+.
+├── lib
+│   ├── browser
+│   │   ├── browser-manager.ts
+│   │   └── page-interactions.ts
+│   ├── config
+│   │   ├── defaults.ts
+│   │   └── schema.ts
+│   ├── core
+│   │   ├── downloader.ts
+│   │   └── validator.ts
+│   ├── errors
+│   │   ├── base.ts
+│   │   ├── errors.ts
+│   │   └── index.ts
+│   ├── utils
+│   │   ├── helpers.ts
+│   │   ├── logger.ts
+│   │   └── result.ts
+│   └── lib.ts
+├── build               # generated output (CJS, ESM, types)
+├── package.json
+└── tsconfig.json
+```
+
 ### Scripts
 
-| Command                | Description                    |
-| ---------------------- | ------------------------------ |
-| `bun run clean`        | Remove `build/` and cache      |
-| `bun run typecheck`    | Run `tsc --noEmit`             |
-| `bun run build:ts`     | Compile TypeScript to `build/` |
-| `bun run build:bundle` | Bundle with Rollup             |
-| `bun run rebuild`      | Full rebuild pipeline          |
-| `bun run format`       | Format all files with Prettier |
+| Command                | Description                                         |
+| ---------------------- | --------------------------------------------------- |
+| `bun run clean`        | Remove `build/` and cache                           |
+| `bun run typecheck`    | Run `tsc --noEmit`                                  |
+| `bun run build:ts`     | Compile TypeScript to `build/`                      |
+| `bun run build:bundle` | Bundle with Rollup                                  |
+| `bun run build`        | Clean + typecheck + build:ts + build:bundle         |
+| `bun run rebuild`      | Full rebuild pipeline (clean-code + build + format) |
+| `bun run format`       | Format all files with Prettier                      |
+| `bun run test`         | Run tests (requires test files)                     |
 
 ---
 

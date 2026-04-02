@@ -2,16 +2,24 @@
 
 > Automate file downloads from [sfile.co](https://sfile.co/) — reliable, retry‑aware, and fully typed.
 
-[![npm version](https://img.shields.io/npm/v/sfiledl.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/sfiledl)
-[![npm downloads](https://img.shields.io/npm/dm/sfiledl?style=flat-square&logo=npm)](https://www.npmjs.com/package/sfiledl)
-[![license](https://img.shields.io/github/license/neuxdotdev/sfiledl?style=flat-square)](https://github.com/neuxdotdev/sfiledl/blob/main/license)
-[![build](https://img.shields.io/github/actions/workflow/status/neuxdotdev/sfiledl/build.yml?branch=main&style=flat-square&logo=github)](https://github.com/neuxdotdev/sfiledl/actions)
-[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
-[![Playwright](https://img.shields.io/badge/Playwright-1.59-green?style=flat-square&logo=playwright)](https://playwright.dev)
-[![Bun](https://img.shields.io/badge/Bun-1.3+-black?style=flat-square&logo=bun)](https://bun.sh)
-[![Node](https://img.shields.io/badge/Node-%3E%3D24-green?style=flat-square&logo=node.js)](https://nodejs.org)
-[![code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square&logo=prettier)](https://prettier.io)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+<p align="center">
+  <a href="https://www.npmjs.com/package/sfiledl"><img src="https://img.shields.io/npm/v/sfiledl.svg?style=flat-square&logo=npm" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/sfiledl"><img src="https://img.shields.io/npm/dm/sfiledl?style=flat-square&logo=npm" alt="npm downloads"></a>
+  <a href="https://github.com/neuxdotdev/sfiledl/blob/main/license"><img src="https://img.shields.io/github/license/neuxdotdev/sfiledl?style=flat-square" alt="license"></a>
+  <a href="https://github.com/neuxdotdev/sfiledl/actions"><img src="https://img.shields.io/github/actions/workflow/status/neuxdotdev/sfiledl/build.yml?branch=main&style=flat-square&logo=github" alt="build"></a>
+  <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-6.0-blue?style=flat-square&logo=typescript" alt="TypeScript"></a>
+  <a href="https://playwright.dev"><img src="https://img.shields.io/badge/Playwright-1.59-green?style=flat-square&logo=playwright" alt="Playwright"></a>
+  <a href="https://bun.sh"><img src="https://img.shields.io/badge/Bun-1.3+-black?style=flat-square&logo=bun" alt="Bun"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node-%3E%3D24-green?style=flat-square&logo=node.js" alt="Node"></a>
+  <a href="https://prettier.io"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square&logo=prettier" alt="code style"></a>
+  <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs welcome"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/neuxdotdev/sfiledl/actions/workflows/build.yml"><img src="https://github.com/neuxdotdev/sfiledl/actions/workflows/build.yml/badge.svg" alt="Build"></a>
+  <a href="https://github.com/neuxdotdev/sfiledl/actions/workflows/pages/pages-build-deployment"><img src="https://github.com/neuxdotdev/sfiledl/actions/workflows/pages/pages-build-deployment/badge.svg" alt="pages-build-deployment"></a>
+  <a href="https://github.com/neuxdotdev/sfiledl/actions/workflows/rmcm-install.yml"><img src="https://github.com/neuxdotdev/sfiledl/actions/workflows/rmcm-install.yml/badge.svg" alt="Setup RMCM"></a>
+</p>
 
 ---
 

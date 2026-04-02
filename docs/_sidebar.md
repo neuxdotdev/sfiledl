@@ -1,0 +1,5 @@
+- [Home](./README.md)
+- [Installation](./pages/installation.md)
+- [Configuration](./pages/config.md)
+- [Example Usage](./pages/example-usage.md)
+- [LICENSE](./license.md)

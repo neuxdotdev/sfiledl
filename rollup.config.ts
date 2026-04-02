@@ -1,8 +1,6 @@
-#!/usr/bin/env node
 import { readFileSync, existsSync } from 'node:fs'
 import { dirname, resolve, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import type { RollupOptions, OutputOptions, Plugin, LoggingFunction, RollupLog } from 'rollup'
 import resolvePlugin from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import terser from '@rollup/plugin-terser'
@@ -13,60 +11,36 @@ import json from '@rollup/plugin-json'
 import replace from '@rollup/plugin-replace'
 import { visualizer } from 'rollup-plugin-visualizer'
 
-const __dirname: string = dirname(fileURLToPath(import.meta.url))
-const projectRoot: string = __dirname
-const isProduction: boolean = process.env.NODE_ENV === 'production'
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const projectRoot = __dirname
+const isProduction = process.env.NODE_ENV === 'production'
 
-interface PackageJson {
-	name?: string
-	version?: string
-	dependencies?: Record<string, string>
-	peerDependencies?: Record<string, string>
-	optionalDependencies?: Record<string, string>
-	devDependencies?: Record<string, string>
-}
-
-let packageJson: PackageJson
-
+let packageJson
 try {
-	const packagePath: string = resolve(projectRoot, 'package.json')
+	const packagePath = resolve(projectRoot, 'package.json')
 	if (!existsSync(packagePath)) {
-		throw new Error(`package.json tidak ditemukan di: ${packagePath}`)
+		throw new Error(`package.json not found at: ${packagePath}`)
 	}
-	const rawContent: string = readFileSync(packagePath, 'utf8')
-	const parsed: unknown = JSON.parse(rawContent)
-	if (parsed === null || typeof parsed !== 'object') {
-		throw new Error('package.json harus berupa object')
-	}
-	packageJson = parsed as PackageJson
-} catch (err: unknown) {
-	const message: string = err instanceof Error ? err.message : String(err)
-	console.error('Failed to read package.json:', message)
+	packageJson = JSON.parse(readFileSync(packagePath, 'utf8'))
+} catch (err) {
+	console.error('Failed to read package.json:', err.message)
 	process.exit(1)
 }
 
-type SimpleExternal = (string | RegExp)[]
-
-const createExternal = (isDts: boolean = false): SimpleExternal => {
-	const externals: SimpleExternal = [
-		...Object.keys(packageJson.dependencies ?? {}),
-		...Object.keys(packageJson.peerDependencies ?? {}),
-		...Object.keys(packageJson.optionalDependencies ?? {}),
+const createExternal = (isDts = false) => {
+	const externals = [
+		...Object.keys(packageJson.dependencies || {}),
+		...Object.keys(packageJson.peerDependencies || {}),
+		...Object.keys(packageJson.optionalDependencies || {}),
 		/^node:.*/,
 		/^(?!\.\/|\.\.\/|\/)/,
 	]
-	if (isDts) {
-		externals.push(/^@types\/.*/)
-	}
+	if (isDts) externals.push(/^@types\/.*/)
 	return externals
 }
 
-interface BasePluginOptions {
-	outputDir: string
-}
-
-const getBasePlugins = ({ outputDir }: BasePluginOptions): Plugin[] => {
-	const absoluteOutputDir: string = resolve(projectRoot, outputDir)
+const getBasePlugins = (outputDir) => {
+	const absoluteOutputDir = resolve(projectRoot, outputDir)
 	return [
 		peerDepsExternal({ includeDependencies: true }),
 		json({ compact: true, preferConst: true }),
@@ -97,7 +71,7 @@ const getBasePlugins = ({ outputDir }: BasePluginOptions): Plugin[] => {
 		replace({
 			preventAssignment: true,
 			values: {
-				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV ?? 'development'),
+				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
 				'__VERSION__': JSON.stringify(packageJson.version),
 			},
 			include: ['lib/**/*'],
@@ -106,9 +80,9 @@ const getBasePlugins = ({ outputDir }: BasePluginOptions): Plugin[] => {
 	]
 }
 
-const getMinificationPlugins = (): Plugin[] => {
-	const terserOptions = {
-		ecma: 2020 as const,
+const getMinificationPlugins = () => [
+	terser({
+		ecma: 2020,
 		module: true,
 		compress: {
 			drop_console: true,
@@ -119,33 +93,21 @@ const getMinificationPlugins = (): Plugin[] => {
 			passes: 2,
 			pure_getters: true,
 			keep_fargs: false,
-			ecma: 2020 as const,
-			module: true,
 			keep_classnames: /Error$/,
 			keep_fnames: /Error$/,
 		},
 		format: {
 			comments: false,
 			ascii_only: false,
-			ecma: 2020 as const,
 			wrap_iife: false,
 		},
-		sourceMap: {
-			filename: 'lib.[format].js.map',
-			url: 'inline',
-		},
-		mangle: {
-			toplevel: true,
-			keep_fnames: /Error$/,
-		},
-	}
-	return [terser(terserOptions)]
-}
+		sourceMap: { filename: 'lib.[format].js.map', url: 'inline' },
+		mangle: { toplevel: true, keep_fnames: /Error$/ },
+	}),
+]
 
-const createWarningHandler = (
-	isDts: boolean = false,
-): ((warning: RollupLog, warn: LoggingFunction) => void) => {
-	const ignoredCodes: readonly string[] = [
+const createWarningHandler = (isDts = false) => {
+	const ignoredCodes = new Set([
 		'CIRCULAR_DEPENDENCY',
 		'THIS_IS_UNDEFINED',
 		'SOURCEMAP_ERROR',
@@ -153,39 +115,31 @@ const createWarningHandler = (
 		'MIXED_EXPORTS',
 		'NON_EXISTENT_EXPORT',
 		'EMPTY_BUNDLE',
-	]
-	const knownQuirkyTypes: readonly string[] = ['ms', 'node', 'jsonwebtoken']
-	return (warning: RollupLog, warn: LoggingFunction): void => {
-		if (!warning.code) {
-			warn(warning)
-			return
-		}
-		if (ignoredCodes.includes(warning.code)) {
-			return
-		}
+	])
+	const knownQuirkyTypes = ['ms', 'node', 'jsonwebtoken']
+
+	return (warning, warn) => {
+		if (!warning.code || ignoredCodes.has(warning.code)) return
+
 		if (
 			isDts &&
 			warning.code === 'MISSING_EXPORT' &&
 			warning.id &&
 			knownQuirkyTypes.some(
-				(pkg: string): boolean =>
-					(warning.id?.includes(`/node_modules/${pkg}`) ||
-						warning.id?.includes(`@types/${pkg}`)) ??
-					false,
+				(pkg) =>
+					warning.id?.includes(`/node_modules/${pkg}`) ||
+					warning.id?.includes(`@types/${pkg}`),
 			)
 		) {
 			return
 		}
-		if (isDts && warning.code === 'TYPE_CONFLICT' && warning.id?.includes('@types/')) {
-			return
-		}
+		if (isDts && warning.code === 'TYPE_CONFLICT' && warning.id?.includes('@types/')) return
+
 		if (
 			warning.code === 'UNUSED_EXTERNAL_IMPORT' &&
 			warning.names &&
 			packageJson.peerDependencies &&
-			Object.keys(packageJson.peerDependencies).some(
-				(dep: string): boolean => warning.names?.includes(dep) ?? false,
-			)
+			Object.keys(packageJson.peerDependencies).some((dep) => warning.names?.includes(dep))
 		) {
 			return
 		}
@@ -193,73 +147,59 @@ const createWarningHandler = (
 	}
 }
 
-interface LibConfigOptions {
-	input: string
-	outputDir: string
-	minify?: boolean
-}
+const createLibConfig = ({ input, outputDir, minify = false }) => {
+	const absoluteOutputDir = resolve(projectRoot, outputDir)
+	const absoluteInput = resolve(projectRoot, input)
 
-const createLibConfig = ({ input, outputDir, minify = false }: LibConfigOptions): RollupOptions => {
-	const absoluteOutputDir: string = resolve(projectRoot, outputDir)
-	const absoluteInput: string = resolve(projectRoot, input)
 	if (!existsSync(absoluteInput)) {
 		console.error(`Entry file not found: ${absoluteInput}`)
 		process.exit(1)
 	}
-	if (!existsSync(absoluteOutputDir)) {
-		console.log(`Output directory: ${relative(projectRoot, absoluteOutputDir)}`)
-	}
-	const basePlugins: Plugin[] = getBasePlugins({ outputDir })
-	const productionPlugins: Plugin[] = isProduction
-		? [
-				visualizer({
-					filename: resolve(absoluteOutputDir, 'stats.html'),
-					open: false,
-					gzipSize: true,
-					brotliSize: true,
-					template: 'treemap',
-				}),
-			]
-		: []
-	const minifyPlugins: Plugin[] = minify ? getMinificationPlugins() : []
-	const outputConfig: OutputOptions[] = [
-		{
-			file: resolve(absoluteOutputDir, 'lib.mjs'),
-			format: 'esm',
-			sourcemap: true,
-			exports: 'named',
-			indent: false,
-			strict: true,
-			freeze: false,
-			esModule: true,
-			interop: 'auto',
-			generatedCode: {
-				constBindings: true,
-				objectShorthand: true,
-				arrowFunctions: true,
-			},
-		},
-		{
-			file: resolve(absoluteOutputDir, 'lib.cjs'),
-			format: 'cjs',
-			sourcemap: true,
-			exports: 'named',
-			indent: false,
-			strict: true,
-			freeze: false,
-			esModule: true,
-			interop: 'auto',
-			generatedCode: {
-				constBindings: true,
-				objectShorthand: true,
-			},
-		},
-	]
+
 	return {
 		input: absoluteInput,
 		external: createExternal(false),
-		plugins: [...basePlugins, ...minifyPlugins, ...productionPlugins],
-		output: outputConfig,
+		plugins: [
+			...getBasePlugins(outputDir),
+			...(minify ? getMinificationPlugins() : []),
+			...(isProduction
+				? [
+						visualizer({
+							filename: resolve(absoluteOutputDir, 'stats.html'),
+							open: false,
+							gzipSize: true,
+							brotliSize: true,
+							template: 'treemap',
+						}),
+					]
+				: []),
+		],
+		output: [
+			{
+				file: resolve(absoluteOutputDir, 'lib.mjs'),
+				format: 'esm',
+				sourcemap: true,
+				exports: 'named',
+				indent: false,
+				strict: true,
+				freeze: false,
+				esModule: true,
+				interop: 'auto',
+				generatedCode: { constBindings: true, objectShorthand: true, arrowFunctions: true },
+			},
+			{
+				file: resolve(absoluteOutputDir, 'lib.cjs'),
+				format: 'cjs',
+				sourcemap: true,
+				exports: 'named',
+				indent: false,
+				strict: true,
+				freeze: false,
+				esModule: true,
+				interop: 'auto',
+				generatedCode: { constBindings: true, objectShorthand: true },
+			},
+		],
 		treeshake: {
 			preset: 'recommended',
 			moduleSideEffects: false,
@@ -278,16 +218,10 @@ const createLibConfig = ({ input, outputDir, minify = false }: LibConfigOptions)
 	}
 }
 
-interface DtsConfigOptions {
-	input: string
-	outputDir: string
-}
-
-const createDtsConfig = ({ input, outputDir }: DtsConfigOptions): RollupOptions => {
-	const absoluteOutputDir: string = resolve(projectRoot, outputDir)
-	const absoluteInput: string = resolve(projectRoot, input)
+const createDtsConfig = ({ input, outputDir }) => {
+	const absoluteOutputDir = resolve(projectRoot, outputDir)
 	return {
-		input: absoluteInput,
+		input: resolve(projectRoot, input),
 		external: createExternal(true),
 		plugins: [
 			dts({
@@ -302,11 +236,7 @@ const createDtsConfig = ({ input, outputDir }: DtsConfigOptions): RollupOptions 
 				},
 			}),
 		],
-		output: {
-			file: resolve(absoluteOutputDir, 'lib.d.ts'),
-			format: 'es',
-			sourcemap: false,
-		},
+		output: { file: resolve(absoluteOutputDir, 'lib.d.ts'), format: 'es', sourcemap: false },
 		treeshake: false,
 		onwarn: createWarningHandler(true),
 		preserveEntrySignatures: 'strict',
@@ -314,16 +244,7 @@ const createDtsConfig = ({ input, outputDir }: DtsConfigOptions): RollupOptions 
 	}
 }
 
-const configs: RollupOptions[] = [
-	createLibConfig({
-		input: 'lib/lib.ts',
-		outputDir: 'build',
-		minify: isProduction,
-	}),
-	createDtsConfig({
-		input: 'lib/lib.ts',
-		outputDir: 'build',
-	}),
+export default [
+	createLibConfig({ input: 'lib/lib.ts', outputDir: 'build', minify: isProduction }),
+	createDtsConfig({ input: 'lib/lib.ts', outputDir: 'build' }),
 ]
-
-export default configs

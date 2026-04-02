@@ -32,7 +32,7 @@
 		"clean": "rm -rf build node_modules/.cache",
 		"typecheck": "tsc --noEmit",
 		"build:ts": "tsc",
-		"build:bundle": "rollup -c",
+		"build:bundle": "rollup -c rollup.config.ts --configPlugin typescript",
 		"build": "bun run clean && bun run typecheck && bun run build:ts && bun run build:bundle",
 		"dev:ts": "tsc --emitDeclarationOnly --outDir build --watch",
 		"build:prod": "NODE_ENV=production bun run build",

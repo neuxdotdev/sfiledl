@@ -1,3 +1,21 @@
+commit c2d0e21d0e8bbae449db5ba6e6af0b6f572b3374
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:52:54 2026 +0700
+
+    chore: make all deps to latest version
+
+commit c383258c2f9f74541c8d5a254d1fe4f7bf45f79e
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:45:20 2026 +0700
+
+    docs: edit readme.md
+
+commit 70c7736412b06fb7d4660d2f0b8d6769efa6ae88
+Author: neuxdotdev <neuxdev1@gmail.com>
+Date:   Thu Apr 2 11:34:23 2026 +0700
+
+    docs: update changelog
+
 commit 549aec09f8297318fcf52d69bc8262d78d769e0d
 Author: neuxdotdev <neuxdev1@gmail.com>
 Date:   Thu Apr 2 11:31:54 2026 +0700

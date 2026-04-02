@@ -51,7 +51,7 @@ jobs:
 
       - run: command -v rmcm || (cargo install --git https://github.com/neuxdotdev/comment-remover.git --force && echo "$HOME/.cargo/bin" >> $GITHUB_PATH)
 
-      - run: bun install --frozen-lockfile
+      - run: bun install
 
       - run: bun run build
 

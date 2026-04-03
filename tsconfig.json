@@ -5,12 +5,12 @@
 		"module": "NodeNext",
 		"moduleResolution": "nodenext",
 		"verbatimModuleSyntax": false,
-		"moduleDetection": "force",
+		"moduleDetection": "auto",
 		"types": ["node"],
 		"allowImportingTsExtensions": false,
 		"resolveJsonModule": false,
 		"allowArbitraryExtensions": false,
-		"rootDir": "lib",
+		"rootDir": ".",
 		"outDir": "dist",
 		"declaration": true,
 		"declarationMap": true,
@@ -42,6 +42,6 @@
 		"skipLibCheck": true,
 		"useDefineForClassFields": true
 	},
-	"include": ["lib/**/*"],
-	"exclude": ["node_modules", "out"]
+	"include": ["lib/**/*", "cli/**/*", "tests/**/*"],
+	"exclude": ["node_modules", "out", "dist", "build"]
 }

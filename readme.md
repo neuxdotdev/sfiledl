@@ -448,7 +448,7 @@ Please ensure your code passes type checking, formatting, and all tests.
 
 ## License
 
-**AGPL-3.0-only** – see [LICENSE](license) for details.  
+**MIT LICENSE** – see [LICENSE](license) for details.  
 This license ensures that any network‑distributed modifications remain open source.
 
 ---

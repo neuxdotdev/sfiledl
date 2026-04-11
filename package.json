@@ -9,7 +9,7 @@
 	"bin": {
 		"sfiledl": "./build/cli.mjs"
 	},
-	"license": "AGPL-3.0-only",
+	"license": "MIT",
 	"files": [
 		"build",
 		"readme.md",
